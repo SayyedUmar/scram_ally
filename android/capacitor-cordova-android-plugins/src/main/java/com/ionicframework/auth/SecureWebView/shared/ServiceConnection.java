@@ -15,8 +15,8 @@
 package com.ionicframework.auth.securewebview.shared;
 
 import android.content.ComponentName;
-import androidx.browser.customtabs.CustomTabsClient;
-import androidx.browser.customtabs.CustomTabsServiceConnection;
+import android.support.customtabs.CustomTabsClient;
+import android.support.customtabs.CustomTabsServiceConnection;
 
 import java.lang.ref.WeakReference;
 

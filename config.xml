@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.scram.mobile.ally.stage" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-<!-- <widget id="com.scram.mobile.ally" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0"> -->
     <name>Ally</name>
     <description>Ally App</description>
     <author email="hi@ionicframework.com" href="http://ionicframework.com/">Ionic Framework Team</author>
@@ -25,7 +24,7 @@
         <access launch-external="yes" origin="tel:*" />
         <access launch-external="yes" origin="mailto:" />
         <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application" xmlns:android="http://schemas.android.com/apk/res/android">
-            <application android:networkSecurityConfig="@xml/network_security_config" android:allowBackup="false" />
+            <application android:allowBackup="false" android:networkSecurityConfig="@xml/network_security_config" />
         </edit-config>
         <config-file parent="/*" target="AndroidManifest.xml">
             <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />

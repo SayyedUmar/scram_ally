@@ -23,7 +23,7 @@
     "@capacitor/android": "^2.2.0",
     "@capacitor/core": "^2.2.0",
     "@capacitor/ios": "^2.4.0",
-    "@ionic-enterprise/auth": "1.8.1",
+    "@ionic-enterprise/auth": "^1.8.1",
     "@ionic-native/android-permissions": "^5.25.0",
     "@ionic-native/app-minimize": "^5.23.0",
     "@ionic-native/app-version": "^5.23.0",
