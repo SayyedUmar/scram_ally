@@ -1,0 +1,97 @@
+.item-option-txt {
+    text-transform: capitalize !important;
+}
+
+.row-width {
+    width: 100% !important;
+}
+
+.row-header {
+    font-weight: bold !important;
+    font-size: 14px !important;
+}
+
+.time-space {
+    // float: right !important;
+    font-size: 12px;
+    margin-top: -12px;
+}
+
+.lbl-p {
+    font-size: 12px !important;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+}
+
+.word-text {
+    word-wrap: break-word;
+    white-space: pre-wrap;
+}
+
+.row-margin-bottom {
+    margin-bottom: -10px !important;
+}
+
+.ion-item-border {
+    border-bottom: 1px solid #d2cdcd !important;
+    // border-left: 2px solid #35c2d2 !important;
+}
+
+// .list-margin-bottom {
+//     margin-bottom: 48% !important;
+// }
+
+.lbl-width {
+    width: 100% !important;
+}
+
+.icon-close {
+    float: right;
+    font-size: 26px;
+    margin-bottom: -10px;
+    margin-right: 2px;
+}
+
+.today-head {
+    font-size: 18px;
+    margin-bottom: -4px;
+}
+
+.no-notification {
+    text-align: center;
+    margin: 10%;
+    font-size: 14px;
+}
+
+// New Tab CSS
+
+.list-margin-bottom {
+    margin-bottom: 34% !important;
+}
+
+.divider-margin-top {
+    margin-top: -20px !important;
+}
+
+.unread-border-left {
+    border-left: 8px solid #DE1A18 !important;
+}
+
+.read-border-remove {
+    border-left: none !important;
+    padding-left: 8px !important;
+}
+
+.btn-clear-all {
+    font-size: 12px !important;
+    background: grey !important;
+    color: white !important;
+    border-radius: 25px !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    float: right !important;
+}
+
+.active-item {
+    --background: #f2f2f2 !important;
+}

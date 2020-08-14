@@ -1,0 +1,60 @@
+.footer-menu {
+  //--background: #015b88 !important;
+  // --background: black !important;
+  // --color: white !important;
+  --background: white !important;
+  --color: black !important;
+}
+
+.menu-toolbar {
+  --background: white !important;
+  --color: black !important;
+  text-align: center !important;
+}
+
+.logout-icon {
+  color: white !important;
+}
+
+.hide-card {
+  -webkit-box-shadow: none !important;
+}
+
+.custom-avatar {
+  height: 20vw;
+  width: 20vw;
+  background: white;
+  border-radius: 50%;
+  display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 18px !important;
+}
+
+.user-card {
+  // --background: #015b88 !important;
+  --background: black !important;
+  margin: 0px !important;
+  --color: white;
+}
+
+.h5-margin {
+  margin-top: 5px !important;
+  margin-bottom: -10px !important;
+}
+
+.alert-title .sc-ion-alert-md {
+  font-size: 16px !important;
+  text-align: center !important;
+}
+
+.close-app-btn {
+  text-transform: capitalize !important;
+  height: 35px !important;
+  --background: #9D9FA6 !important;
+}
+
+.version-num {
+  float: right !important;
+  color: #aba3a3 !important;
+}

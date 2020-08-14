@@ -1,0 +1,146 @@
+// The MIT License (MIT)
+
+// Copyright (c) 2017 Mobisys GmbH
+// Copyright (c) 2014 Wymsee, Inc
+
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
+package com.ionicframework.auth.ionichttp;
+
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+import java.security.KeyStore;
+import java.security.cert.CertificateFactory;
+import java.security.cert.X509Certificate;
+
+import com.ionicframework.auth.ionichttp.http.TLSConfiguration;
+
+import org.apache.cordova.CallbackContext;
+
+import android.app.Activity;
+import android.util.Log;
+import android.content.res.AssetManager;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.TrustManagerFactory;
+import javax.net.ssl.X509TrustManager;
+
+class CordovaServerTrust implements Runnable {
+  private static final String TAG = "Cordova-Plugin-HTTP";
+
+  private final TrustManager[] noOpTrustManagers;
+  private final HostnameVerifier noOpVerifier;
+
+  private String mode;
+  private Activity activity;
+  private TLSConfiguration tlsConfiguration;
+  private CallbackContext callbackContext;
+
+  public CordovaServerTrust(final String mode, final Activity activity, final TLSConfiguration configContainer,
+      final CallbackContext callbackContext) {
+
+    this.mode = mode;
+    this.activity = activity;
+    this.tlsConfiguration = configContainer;
+    this.callbackContext = callbackContext;
+
+    this.noOpTrustManagers = new TrustManager[] { new X509TrustManager() {
+      public X509Certificate[] getAcceptedIssuers() {
+        return new X509Certificate[0];
+      }
+
+      public void checkClientTrusted(X509Certificate[] chain, String authType) {
+        // intentionally left blank
+      }
+
+      public void checkServerTrusted(X509Certificate[] chain, String authType) {
+        // intentionally left blank
+      }
+    } };
+
+    this.noOpVerifier = new HostnameVerifier() {
+      public boolean verify(String hostname, SSLSession session) {
+        return true;
+      }
+    };
+  }
+
+  @Override
+  public void run() {
+    try {
+      if ("legacy".equals(this.mode)) {
+        this.tlsConfiguration.setHostnameVerifier(null);
+        this.tlsConfiguration.setTrustManagers(null);
+      } else if ("nocheck".equals(this.mode)) {
+        this.tlsConfiguration.setHostnameVerifier(this.noOpVerifier);
+        this.tlsConfiguration.setTrustManagers(this.noOpTrustManagers);
+      } else if ("pinned".equals(this.mode)) {
+        this.tlsConfiguration.setHostnameVerifier(null);
+        this.tlsConfiguration.setTrustManagers(this.getTrustManagers(this.getCertsFromBundle("www/certificates")));
+      } else {
+        this.tlsConfiguration.setHostnameVerifier(null);
+        this.tlsConfiguration.setTrustManagers(this.getTrustManagers(this.getCertsFromKeyStore("AndroidCAStore")));
+      }
+
+      callbackContext.success();
+    } catch (Exception e) {
+      Log.e(TAG, "An error occured while configuring SSL cert mode", e);
+      callbackContext.error("An error occured while configuring SSL cert mode");
+    }
+  }
+
+  private TrustManager[] getTrustManagers(KeyStore store) throws GeneralSecurityException {
+    String tmfAlgorithm = TrustManagerFactory.getDefaultAlgorithm();
+    TrustManagerFactory tmf = TrustManagerFactory.getInstance(tmfAlgorithm);
+    tmf.init(store);
+
+    return tmf.getTrustManagers();
+  }
+
+  private KeyStore getCertsFromBundle(String path) throws GeneralSecurityException, IOException {
+    AssetManager assetManager = this.activity.getAssets();
+    String[] files = assetManager.list(path);
+
+    CertificateFactory cf = CertificateFactory.getInstance("X.509");
+    String keyStoreType = KeyStore.getDefaultType();
+    KeyStore keyStore = KeyStore.getInstance(keyStoreType);
+
+    keyStore.load(null, null);
+
+    for (int i = 0; i < files.length; i++) {
+      int index = files[i].lastIndexOf('.');
+
+      if (index == -1 || !files[i].substring(index).equals(".cer")) {
+        continue;
+      }
+
+      keyStore.setCertificateEntry("CA" + i, cf.generateCertificate(assetManager.open(path + "/" + files[i])));
+    }
+
+    return keyStore;
+  }
+
+  private KeyStore getCertsFromKeyStore(String storeType) throws GeneralSecurityException, IOException {
+    KeyStore store = KeyStore.getInstance(storeType);
+    store.load(null);
+
+    return store;
+  }
+}

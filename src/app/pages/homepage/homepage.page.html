@@ -1,0 +1,94 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      <ion-label>
+        <ion-row class="header-txt">
+          <ion-col>
+            <img alt="Ally Home" src="../../../assets/imgs/AppHeader.png" class="header-img" id="idAlly" />
+          </ion-col>
+        </ion-row>
+      </ion-label>
+    </ion-title>
+
+    <ion-buttons slot="end" class="margin-0">
+      <ion-button class="margin-0" [routerLink]="['/show-map']" routerDirection="forward">
+        <label class="lbl-location">
+          <ion-icon name="pin" class="location-icon"></ion-icon> <br> My Location
+        </label>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" pullFactor="0.5" pullMin="100" pullMax="200" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles"
+      refreshingText="Refreshing data...">
+    </ion-refresher-content>
+  </ion-refresher>
+
+
+  <ion-tabs class="tabs-margin" id="commonTabs">
+    <ion-tab-bar slot="top" class="tab-bar">
+      <ion-tab-button tab="critical" class="btn-tabs" id="critical">
+        <ion-icon src="../../../assets/icon/critical.svg" class="critical-icon">
+        </ion-icon>
+        <ion-label>Critical</ion-label>
+        <ion-badge *ngIf="criticalBadgeCount > 0" id="badgeCritical" color="danger" class="icon-badge">
+          {{criticalBadgeCount}}</ion-badge>
+      </ion-tab-button>
+      <ion-tab-button tab="serious" class="btn-tabs" id="serious">
+        <ion-icon src="../../../assets/icon/notification_imp.svg" class="serious-icon"></ion-icon>
+        <ion-label>Serious</ion-label>
+        <ion-badge *ngIf="seriousBadgeCount > 0" id="badgeSerious" color="danger" class="icon-badge">
+          {{seriousBadgeCount}}</ion-badge>
+      </ion-tab-button>
+
+      <ion-tab-button tab="warning" class="btn-tabs" id="warning">
+        <ion-icon src="../../../assets/icon/warning.svg" class="warning-icon"></ion-icon>
+        <ion-label>Warning</ion-label>
+        <ion-badge *ngIf="warningBadgeCount > 0" id="badgeWarning" color="danger" class="icon-badge">
+          {{warningBadgeCount}}</ion-badge>
+      </ion-tab-button>
+
+      <ion-tab-button tab="message" class="btn-tabs" id="message">
+        <ion-icon src="../../../assets/icon/message.svg" class="message-icon"></ion-icon>
+        <ion-label>Low</ion-label>
+        <ion-badge *ngIf="messageBadgeCount > 0" id="badgeMessage" color="danger" class="icon-badge">
+          {{messageBadgeCount}}</ion-badge>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+
+</ion-content>
+
+<ion-footer class="footer-new-css">
+  <ion-label>
+    <ion-row class="row-footer">
+      <ion-col *ngIf="isClientAssigned">
+        <div id="button-background">
+          <span *ngIf="panicBtnValue" class="slide-text">Swipe to dial {{panicBtnValue}} </span>
+          <span *ngIf="!panicBtnValue" class="slide-text">Swipe to dial </span>
+          <div id="slider" (touchmove)="touchmove($event)" (touchend)="touchend($event)">
+            <ion-icon src="../../../assets/icon/phone.svg" class="phone-icon">
+            </ion-icon>
+          </div>
+        </div>
+      </ion-col>
+
+      <ion-col *ngIf="!isClientAssigned">
+        <div id="button-background">
+          <span *ngIf="panicBtnValue" class="slide-text">Swipe to dial {{panicBtnValue}} </span>
+          <span *ngIf="!panicBtnValue" class="slide-text">Swipe to dial </span>
+          <div id="slider">
+            <ion-icon src="../../../assets/icon/phone.svg" class="phone-icon-disabled">
+            </ion-icon>
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-label>
+</ion-footer>

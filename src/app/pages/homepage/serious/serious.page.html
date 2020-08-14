@@ -1,0 +1,215 @@
+<ion-content>
+  <ion-list lines="none" *ngIf="seriousAlertList.length > 0">
+    <ion-item-divider class="divider-margin-top" *ngIf="isTodayDataAvailable">
+      <ion-label class="lbl-width">
+        <ion-row>
+          <ion-col size="8" (click)="closeClearAll()">
+            <h2 class="today-head">Today</h2>
+          </ion-col>
+          <ion-col size="4">
+            <p class="icon-close" *ngIf="!clearAllBtn" (click)="clearAll()">
+              <ion-icon name="close-circle"></ion-icon>
+            </p>
+            <p
+              class="btn-clear-all"
+              *ngIf="clearAllBtn"
+              (click)="clearAllAlerts()"
+            >
+              Clear All
+            </p>
+          </ion-col>
+        </ion-row>
+      </ion-label>
+    </ion-item-divider>
+
+    <ion-item-sliding
+      id="idCriticalList"
+      (click)="expandItem(item)"
+      *ngFor="let item of seriousFilteredList; let i = index;"
+    >
+      <ion-item
+        class="ion-item-border"
+        [ngClass]="{'unread-border-left': (!item.readBy), 'read-border-remove': (item.readBy), 'active-item': item.expanded}"
+        *ngIf="item.isDeleted === false && (checkForTodaysDate(item.exceptionDateTime))"
+      >
+        <ion-label>
+          <ion-row>
+            <ion-col>
+              <h2 class="row-header">{{item.exceptionTypeName}}</h2>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <p class="time-space">
+                {{item.exceptionDateTime | date : "MM/dd/yyyy @ hh:mm a" }}
+              </p>
+            </ion-col>
+          </ion-row>
+          <app-expandable expandHeight="100px" [expanded]="item.expanded">
+            <ion-row class="row-margin-bottom">
+              <ion-col size="3">
+                <p class="lbl-p"><b>Location:</b></p>
+              </ion-col>
+              <ion-col size="9">
+                <p class="lbl-p">
+                  {{item.location ? item.location : 'Address Not Available'}}
+                </p>
+              </ion-col>
+            </ion-row>
+
+            <ion-row class="row-margin-bottom">
+              <ion-col size="3">
+                <p class="lbl-p"><b>Account:</b></p>
+              </ion-col>
+              <ion-col size="9">
+                <p class="lbl-p">{{item.victimAccountName}}</p>
+              </ion-col>
+            </ion-row>
+
+            <ion-row class="row-margin-bottom" *ngIf="item.zoneName !== ''">
+              <ion-col size="3">
+                <p class="lbl-p"><b>Zone:</b></p>
+              </ion-col>
+              <ion-col size="9">
+                <p class="lbl-p">{{item.zoneName}}</p>
+              </ion-col>
+            </ion-row>
+          </app-expandable>
+        </ion-label>
+      </ion-item>
+
+      <ion-item-options side="start">
+        <ion-item-option
+          color="danger"
+          class="item-option-txt"
+          (click)="deleteItem(item)"
+        >
+          <ion-icon slot="top" name="trash"></ion-icon>
+          Delete
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+
+  <ion-list
+    lines="none"
+    class="list-margin-bottom"
+    *ngIf="seriousAlertList.length > 0"
+  >
+    <ion-item-divider class="divider-margin-top" *ngIf="isTodayDataAvailable">
+      <ion-label class="lbl-width">
+        <ion-row>
+          <ion-col size="4">
+            <h2 class="today-head">Older</h2>
+          </ion-col>
+        </ion-row>
+      </ion-label>
+    </ion-item-divider>
+
+    <ion-item-divider class="divider-margin-top" *ngIf="!isTodayDataAvailable">
+      <ion-label class="lbl-width">
+        <ion-row>
+          <ion-col size="8" (click)="closeClearAll()">
+            <h2 class="today-head">Older</h2>
+          </ion-col>
+          <ion-col size="4">
+            <p class="icon-close" *ngIf="!clearAllBtn" (click)="clearAll()">
+              <ion-icon name="close-circle"></ion-icon>
+            </p>
+            <p
+              class="btn-clear-all"
+              *ngIf="clearAllBtn"
+              (click)="clearAllAlerts()"
+            >
+              Clear All
+            </p>
+          </ion-col>
+        </ion-row>
+      </ion-label>
+    </ion-item-divider>
+
+    <ion-item-sliding
+      id="idCriticalList"
+      (click)="expandItem(item)"
+      *ngFor="let item of seriousFilteredList; let i = index;"
+    >
+      <ion-item
+        class="ion-item-border"
+        [ngClass]="{'unread-border-left': (!item.readBy), 'read-border-remove': (item.readBy), 'active-item': item.expanded}"
+        *ngIf="item.isDeleted === false && !(checkForTodaysDate(item.exceptionDateTime))"
+      >
+        <ion-label>
+          <ion-row>
+            <ion-col>
+              <h2 class="row-header">{{item.exceptionTypeName}}</h2>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <p class="time-space">
+                {{item.exceptionDateTime | date : "MM/dd/yyyy @ hh:mm a" }}
+              </p>
+            </ion-col>
+          </ion-row>
+          <app-expandable expandHeight="100px" [expanded]="item.expanded">
+            <ion-row class="row-margin-bottom">
+              <ion-col size="3">
+                <p class="lbl-p"><b>Location:</b></p>
+              </ion-col>
+              <ion-col size="9">
+                <p class="lbl-p">
+                  {{item.location ? item.location : 'Address Not Available'}}
+                </p>
+              </ion-col>
+            </ion-row>
+
+            <ion-row class="row-margin-bottom">
+              <ion-col size="3">
+                <p class="lbl-p"><b>Account:</b></p>
+              </ion-col>
+              <ion-col size="9">
+                <p class="lbl-p">{{item.victimAccountName}}</p>
+              </ion-col>
+            </ion-row>
+
+            <ion-row class="row-margin-bottom" *ngIf="item.zoneName !== ''">
+              <ion-col size="3">
+                <p class="lbl-p"><b>Zone:</b></p>
+              </ion-col>
+              <ion-col size="9">
+                <p class="lbl-p">{{item.zoneName}}</p>
+              </ion-col>
+            </ion-row>
+          </app-expandable>
+        </ion-label>
+      </ion-item>
+
+      <ion-item-options side="start">
+        <ion-item-option
+          color="danger"
+          class="item-option-txt"
+          (click)="deleteItem(item)"
+        >
+          <ion-icon slot="top" name="trash"></ion-icon>
+          Delete
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadMoreData($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Loading more data..."
+    >
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+  <div
+    id="no-notification"
+    *ngIf="seriousAlertList.length < 1"
+    class="no-notification"
+  >
+    No Notifications
+  </div>
+</ion-content>

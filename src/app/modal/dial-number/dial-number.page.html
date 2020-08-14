@@ -1,0 +1,35 @@
+<!-- <ion-content>
+  <div>
+  <span>
+    If you feel you are in danger, Swipe to dial
+  </span> <ion-button (click)="closeModal()">Got it</ion-button>
+</div>
+</ion-content> -->
+
+
+<ion-content>
+  <div class="overlay"></div>
+  <div class="modal_content">
+    <ion-label>
+      <ion-row class="row-margin-top">
+        <ion-col>
+          <p class="tour-title">Tour :</p>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="row-margin-top">
+        <ion-col size="6">
+          <p class="lbl-pm">If you feel you are in danger, swipe to dial</p>
+        </ion-col>
+        <ion-col size="6" class="col-text">
+          <ion-button color="primary" class="btn-text" (click)="closeModal()">Got it</ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <div class="image-container">
+          <img class="logo" src="../../../assets/imgs/swipeTodial.png" id="swipeToDial" />
+        </div>
+      </ion-row>
+    </ion-label>
+  </div>
+</ion-content>

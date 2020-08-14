@@ -1,0 +1,98 @@
+{
+  "project_info": {
+    "project_number": "287257776741",
+    "firebase_url": "https://scram-ally.firebaseio.com",
+    "project_id": "scram-ally",
+    "storage_bucket": "scram-ally.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:287257776741:android:33fbcc03810ee1fdec6c8c",
+        "android_client_info": {
+          "package_name": "com.scram.mobile.ally"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "287257776741-2opgdn4rimjr31iv7thmg8ihd6g4ac4d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAacgNHIL6TRMo14DTOnKlAI0Gebfavxt4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "287257776741-2opgdn4rimjr31iv7thmg8ihd6g4ac4d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:287257776741:android:bbd0b92d07d02116ec6c8c",
+        "android_client_info": {
+          "package_name": "com.scram.mobile.ally.stage"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "287257776741-2opgdn4rimjr31iv7thmg8ihd6g4ac4d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAacgNHIL6TRMo14DTOnKlAI0Gebfavxt4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "287257776741-2opgdn4rimjr31iv7thmg8ihd6g4ac4d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:287257776741:android:af5ef578bde44865ec6c8c",
+        "android_client_info": {
+          "package_name": "com.scram.mobile.ally.test"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "287257776741-2opgdn4rimjr31iv7thmg8ihd6g4ac4d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAacgNHIL6TRMo14DTOnKlAI0Gebfavxt4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "287257776741-2opgdn4rimjr31iv7thmg8ihd6g4ac4d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

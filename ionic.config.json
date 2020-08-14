@@ -1,0 +1,18 @@
+{
+  "name": "victimNotify",
+  "integrations": {
+    "capacitor": {},
+    "cordova": {},
+    "enterprise": {
+      "keyId": 222,
+      "productKey": "key_302736b4fac24bc09ac2f62a25156f71",
+      "appId": "ca5161a7",
+      "orgId": "218312a7-5249-44f2-be20-4cddfe0dd62f",
+      "registries": [
+        "@ionic-enterprise;https://registry.ionicframework.com/"
+      ]
+    }
+  },
+  "type": "angular",
+  "id": "ca5161a7"
+}

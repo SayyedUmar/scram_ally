@@ -1,0 +1,83 @@
+<!-- <ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button routerLink="/homepage" routerDirection="back">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>
+      My Profile
+    </ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      <ion-label>
+        <ion-row class="header-txt">
+          <ion-col>
+            <ion-title>
+              My Profile
+            </ion-title>
+          </ion-col>
+        </ion-row>
+      </ion-label>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="ion-text-center hide-card user-card">
+    <img src="../assets/imgs/male-user.png" class="custom-avatar" name="userAvatar" />
+    <h5 class="h5-margin">{{victimDetails.name}}</h5>
+    <p>{{victimDetails.email}}</p>
+  </div>
+
+  <div class="content-div">
+    <ion-label name="profile">
+      <ion-row class="row-margin-bottom">
+        <ion-col size="6">
+          <p class="lbl-p"><b>Phone Number</b></p>
+        </ion-col>
+        <ion-col size="6">
+          <p class="lbl-p">{{victimDetails.phone}}</p>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="6">
+          <p class="lbl-p"><b>Zone Radius</b></p>
+        </ion-col>
+        <ion-col size="6">
+          <p class="lbl-p">{{victimDetails.zoneRadius}}</p>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="6">
+          <p class="lbl-p"><b>Primary Agent</b></p>
+        </ion-col>
+        <ion-col size="6">
+          <p class="lbl-p">{{victimDetails.primaryAgent}}</p>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="6">
+          <p class="lbl-p"><b>Account</b></p>
+        </ion-col>
+        <ion-col size="6">
+          <p class="lbl-p">{{victimDetails.account}}</p>
+        </ion-col>
+      </ion-row>
+    </ion-label>
+  </div>
+
+  <div class="links-div bottom-div-space" (click)="openURL()">
+    <ion-label name="termsCondition">
+      <ion-icon name="create" class="create-icon"></ion-icon>
+      Terms & Conditions
+    </ion-label>
+  </div>
+</ion-content>

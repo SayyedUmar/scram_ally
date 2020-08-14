@@ -1,0 +1,42 @@
+<ion-content>
+  <div class="termsCond-header">
+    Terms & Conditions
+  </div>
+  <div class="effectiveDate">
+    Effective: March 12, 2019
+  </div>
+  <div class="content-div">
+    <span>
+      This application is maintained on behalf of the
+    </span>
+    <span class="underline-text">
+      law enforcement agency or treatment court with which you are affiliated or
+      contracted
+    </span>
+    <span>
+      and all information within the system belongs to that agency. By
+      installing and signing into this application by you, as well as any
+      information you enter into the application or access during such use, is
+      subject to these <a (click)="openURL()">terms and conditions.</a>
+    </span>
+  </div>
+</ion-content>
+
+<ion-footer class="footer-new-css">
+  <ion-label>
+    <ion-row class="row-footer">
+      <ion-col>
+        <ion-button id="btnAccept" color="success" expand="block" round (click)="onAccept()" class="btnAcceptCls">Accept
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="row-footer">
+      <ion-col>
+        <ion-button id="btnAccept" color="" expand="block" round fill="clear" (click)="onDisagee()" class="btnDisagree">
+          Disagree
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-label>
+</ion-footer>

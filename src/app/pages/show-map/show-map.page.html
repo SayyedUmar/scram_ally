@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      <ion-label>
+        <ion-row class="header-txt">
+          <ion-col>
+            <ion-title>
+              My Location
+            </ion-title>
+          </ion-col>
+        </ion-row>
+      </ion-label>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div #map id="map"></div>
+</ion-content>
+
+<div id='locationInfo'>
+  <div class="content-div">
+    <ion-label>
+      <ion-row class="row-margin-bottom">
+        <ion-col size="3">
+          <p class="lbl-p"><b>Address</b></p>
+        </ion-col>
+        <ion-col size="9">
+          <p class="lbl-p">{{currentAddress}}</p>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="row-margin-bottom">
+        <ion-col size="3">
+          <p class="lbl-p"><b>Latitude</b></p>
+        </ion-col>
+        <ion-col size="9">
+          <p class="lbl-p">{{currentLatitude}}</p>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="row-margin-bottom">
+        <ion-col size="3">
+          <p class="lbl-p"><b>Longitude</b></p>
+        </ion-col>
+        <ion-col size="9">
+          <p class="lbl-p">{{currentLongitude}}</p>
+        </ion-col>
+      </ion-row>
+    </ion-label>
+  </div>
+</div>
