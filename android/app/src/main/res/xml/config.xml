@@ -10,6 +10,10 @@
     <param name="android-package" value="com.ionicframework.auth.ionichttp.IonicHttp"/>
   </feature>
 
+  <feature name="CustomPlugin">
+    <param name="android-package" value="cordova-plugin-first-plugin.CustomPlugin"/>
+  </feature>
+
   <feature name="CallNumber">
     <param name="android-package" value="mx.ferreyra.callnumber.CFCallNumber"/>
   </feature>
