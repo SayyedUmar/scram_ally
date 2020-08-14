@@ -33,6 +33,7 @@ import com.google.android.gms.location.LocationSettingsResponse;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.scram.ally.plugin.test.TestPlugin;
 import com.scram.mobile.ally.EasyPermissions.BaseRequestExecutor;
 import com.scram.mobile.ally.EasyPermissions.EasyPermissions;
 import com.scram.mobile.ally.EasyPermissions.RequestExecutor;
@@ -44,6 +45,7 @@ import java.util.List;
 import static android.Manifest.permission.ACCESS_BACKGROUND_LOCATION;
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
+//import com.scram.ally.plugin.test.Test
 
 public class MainActivity extends BridgeActivity {
     private static final String TAG = "#Yoga";
@@ -71,6 +73,7 @@ public class MainActivity extends BridgeActivity {
             // Additional plugins you've installed go here
             // Ex: add(TotallyAwesomePlugin.class);
             add(CustomNativePlugin.class);
+            add(TestPlugin.class);
         }});
         Log.e(TAG, "onCreate: MainActivity");
         CheckGpsStatus();
