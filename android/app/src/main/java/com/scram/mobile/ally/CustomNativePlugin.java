@@ -193,7 +193,7 @@ public class CustomNativePlugin extends Plugin {
         String DeviceIMEI = appCache.get_VICTIM_IMEI();
 
         ApplicationConstants.DEVICE_IMEI = DeviceIMEI;
-        Log.e(TAG, "sendDeviceIMEItoApp: : DeviceIMEI : "+ DeviceIMEI);
+        Log.e(TAG, "sendDeviceIMEItoApp: : DeviceIMEI : " + DeviceIMEI);
     }
 
     @PluginMethod()
@@ -207,8 +207,7 @@ public class CustomNativePlugin extends Plugin {
         Log.d(TAG, call.getData().toString());
 
         String VictimDetails = appCache.get_VICTIM_DETAILS();
-        Log.e(TAG, "sendVictimDetailsToApp: : VictimDetails : "+ VictimDetails);
-
+        Log.e(TAG, "sendVictimDetailsToApp: : VictimDetails : " + VictimDetails);
 
 
         try {
@@ -412,8 +411,7 @@ public class CustomNativePlugin extends Plugin {
                 }
 
                 notifyListeners("apiAuthFailedEvent", ret);
-            }
-            else if (intent.getAction().matches(ApplicationConstants.ACTION_SERVICE_STOP_EVENT)) {
+            } else if (intent.getAction().matches(ApplicationConstants.ACTION_SERVICE_STOP_EVENT)) {
                 JSObject ret = null;
                 ret = new JSObject();
                 String message = intent.getStringExtra("data");
@@ -529,31 +527,35 @@ public class CustomNativePlugin extends Plugin {
     @PluginMethod()
     public void LogInfo(PluginCall call) {
         String tag = call.getData().getString("tag");
-        String message =call.getData().getString("message");
+        String message = call.getData().getString("message");
         Log.i(tag, message);
         appendLog(tag + " : " + message);
     }
+
     @PluginMethod()
     public void LogError(PluginCall call) {
         String tag = call.getData().getString("tag");
-        String message =call.getData().getString("message");
+        String message = call.getData().getString("message");
         Log.e(tag, message);
         appendLog(tag + " : " + message);
     }
+
     @PluginMethod()
     public void LogWarning(PluginCall call) {
         String tag = call.getData().getString("tag");
-        String message =call.getData().getString("message");
+        String message = call.getData().getString("message");
         Log.w(tag, message);
         appendLog(tag + " : " + message);
     }
+
     @PluginMethod()
     public void LogDebug(PluginCall call) {
         String tag = call.getData().getString("tag");
-        String message =call.getData().getString("message");
+        String message = call.getData().getString("message");
         Log.d(tag, message);
         appendLog(tag + " : " + message);
     }
+
     @PluginMethod()
     public void appendLog(String text) {
         SimpleDateFormat fileNameDateTimeFormat = new SimpleDateFormat("yyyy_MMdd");
@@ -585,7 +587,7 @@ public class CustomNativePlugin extends Plugin {
     @PluginMethod()
     public boolean IsMobileDataEnabled(PluginCall call) {
         boolean mobileDataEnabled = false; // Assume disabled
-        ConnectivityManager cm = (ConnectivityManager)  ((App) getActivity().getApplication()).getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager cm = (ConnectivityManager) ((App) getActivity().getApplication()).getSystemService(Context.CONNECTIVITY_SERVICE);
         try {
             Class cmClass = Class.forName(cm.getClass().getName());
             Method method = cmClass.getDeclaredMethod("getMobileDataEnabled");
