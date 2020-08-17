@@ -98,10 +98,11 @@ export class AuthenticationService extends IonicAuth implements OnDestroy {
   ngOnDestroy(): void {
   }
 
-  async login(): Promise<void> {
+  async attemptlogin(): Promise<void> {
     this.commonAPIService.showLoader('Signing in ...');
     this.logService.logDebug('AuthenticationService', 'login()', 'Signing in ...');
-    await super.login().then(() => {
+    //
+    await this.login().then(() => {
 
     }).catch(err => {
       if (err.message === 'user is blocked') {

@@ -14,7 +14,7 @@
 
 package com.ionicframework.auth.securewebview.shared;
 
-import androidx.browser.customtabs.CustomTabsClient;
+import android.support.customtabs.CustomTabsClient;
 
 /**
  * Callback for events when connecting and disconnecting from Custom Tabs Service.

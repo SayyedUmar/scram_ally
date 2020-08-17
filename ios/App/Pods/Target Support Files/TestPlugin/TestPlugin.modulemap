@@ -1,6 +1,0 @@
-framework module TestPlugin {
-  umbrella header "TestPlugin-umbrella.h"
-
-  export *
-  module * { export * }
-}

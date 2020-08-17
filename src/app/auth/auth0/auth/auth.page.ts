@@ -58,7 +58,7 @@ export class AuthPage implements OnInit {
     if (this.authenticationService.isUserAuthenticated) {
       this.authenticationService.setToken();
     } else {
-      await this.authenticationService.login();
+      await this.authenticationService.attemptlogin();
     }
   }
 

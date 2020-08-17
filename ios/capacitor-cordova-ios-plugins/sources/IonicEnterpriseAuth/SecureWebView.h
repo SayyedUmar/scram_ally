@@ -21,6 +21,7 @@
 // THE SOFTWARE.
 #import <Cordova/CDVPlugin.h>
 #import <SafariServices/SafariServices.h>
+#import <AuthenticationServices/AuthenticationServices.h>
 
 @protocol ActivityItemProvider
 
