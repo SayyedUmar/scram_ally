@@ -1,0 +1,37 @@
+cordova.define("@ionic-enterprise/auth.js-util", function(require, exports, module) { 
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var jsUtil = /** @class */ (function () {
+    function jsUtil() {
+    }
+    // typeof is not working reliably in JS
+    jsUtil.getTypeOf = function (object) {
+        switch (Object.prototype.toString.call(object)) {
+            case '[object Array]':
+                return 'Array';
+            case '[object Blob]':
+                return 'Blob';
+            case '[object ArrayBuffer]':
+                return 'ArrayBuffer';
+            case '[object Boolean]':
+                return 'Boolean';
+            case '[object Function]':
+                return 'Function';
+            case '[object Null]':
+                return 'Null';
+            case '[object Number]':
+                return 'Number';
+            case '[object Object]':
+                return 'Object';
+            case '[object String]':
+                return 'String';
+            case '[object Undefined]':
+                return 'Undefined';
+            default:
+                return 'Unknown';
+        }
+    };
+    return jsUtil;
+}());
+exports.jsUtil = jsUtil;
+});
