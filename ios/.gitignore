@@ -12,3 +12,5 @@ xcuserdata
 capacitor-cordova-ios-plugins
 
 /rockstar.xcuserdatad
+
+ios/App/Public/
