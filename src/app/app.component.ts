@@ -16,6 +16,25 @@ import { CommonAPIService } from './provider/common-api/common-api.service';
 import { DiagnosticCheckService } from './provider/diagnostic-check.service';
 import { NotificationsService } from './provider/notification-api/notifications.service';
 
+
+declare global  {
+  interface PluginRegistry {
+    CustomNativePlugin?: CustomNativePlugin;
+  }
+}
+
+interface CustomNativePlugin {
+  customCall(): Promise<any>;
+  customStopService(): Promise<any>;
+  sendTokenToApp(): Promise<any>;
+  sendDeviceIMEItoApp(): Promise<any>;
+  LogInfo(): Promise<any>;
+  LogError(): Promise<any>;
+  LogDebug(): Promise<any>;
+  LogWarning(): Promise<any>;
+  appendLog(): Promise<any>;
+}
+
 const { Network, CustomNativePlugin, PushNotifications } = Plugins;
 
 @Component({
