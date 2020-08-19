@@ -30,7 +30,7 @@ export class ProfilePage implements OnInit {
       phone: this.victimDetailsProfile.cellPhone,
       account: this.victimDetailsProfile.accountName,
       primaryAgent: '',
-      zoneRadius: this.commonAPIService.appConfiguration.zoneRadiusDisplayName
+      zoneRadius: ''
     };
 
     this.userDetailsObj = {

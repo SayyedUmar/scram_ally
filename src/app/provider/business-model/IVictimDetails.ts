@@ -5,4 +5,15 @@ export interface IVictimDetails{
     account: any,
     primaryAgent: any,
     zoneRadius: any
+    
+// accountId: string;
+// accountName: string;
+// cellPhone: string;
+// countryCode: string;
+// firstName: string;
+// lastName: string;
+// middleName: any;
+// status: string;
+// username: string;
+// victimId: string;
   };

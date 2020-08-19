@@ -59,7 +59,7 @@ export class NotificationsService {
         this.isNotificationsEnabled = data;
         // tslint:disable-next-line:max-line-length
       }
-    });
+    })
   }
 
   setEvent(messageType, eventMessage) {
