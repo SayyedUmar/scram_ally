@@ -171,7 +171,7 @@ export class HomepagePage implements OnInit {
     this.commonAPIService.victimDetails = await this.commonAPIService.getStorageValue('loggedInVictimDetails');
     this.sendVictimDetailsToNativeApp(this.commonAPIService.victimDetails);
 
-    PushNotifications.requestPermissions().then(result => {
+    PushNotifications.requestPermission().then(result => {
       if (result) {
         // Register with Apple / Google to receive push via APNS/FCM
 
@@ -189,6 +189,7 @@ export class HomepagePage implements OnInit {
 
     this.getVictimDetailsAndRegisterDevice();
     this.resetSwipeButton.subscribe(a => this.logService.logDebug('HomePage', 'eventSubscribtions', 'resetSwipeButton subscribed'));
+    
   }
 
   async getVictimDetailsAndRegisterDevice() {
@@ -205,7 +206,8 @@ export class HomepagePage implements OnInit {
         this.logService.logDebug('HomePage', 'getVictimDetailsAndRegisterDevice', 'Is this.commonAPIService.isServiceStarted : ' +
           this.commonAPIService.isServiceStarted);
         if (!this.commonAPIService.isServiceStarted) {
-          CustomNativePlugin.customCall();
+          console.log('customCall 2')
+          CustomNativePlugin.customCall({victimId: this.commonAPIService.victimDetails.victimId});
           CustomNativePlugin.IsMobileDataEnabled().then(res => {
             console.log('IsMobileDataEnabled : ');
             console.log(res);
@@ -682,6 +684,7 @@ export class HomepagePage implements OnInit {
   // Sending Data to Android native code
   sendVictimDetailsToNativeApp(victimDetails) {
     CustomNativePlugin.sendVictimDetailsToApp({ 'victimDetails': victimDetails });
+    // CustomNativePlugin.customCall({'victimId': victimDetails.victimId});
     this.logService.logInfo('HomePage', 'sendVictimDetailsToNativeApp()', 'VictimDetails:' + JSON.stringify(victimDetails));
   }
 

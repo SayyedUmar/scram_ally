@@ -29,6 +29,7 @@ interface CustomNativePlugin {
   customStopService(): Promise<any>;
   sendTokenToApp(): Promise<any>;
   sendDeviceIMEItoApp(): Promise<any>;
+  sendVictimDetailsToApp(): Promise<any>;
   LogInfo(): Promise<any>;
   LogError(): Promise<any>;
   LogDebug(): Promise<any>;
@@ -64,6 +65,11 @@ export class AppComponent implements OnInit, OnDestroy {
       title: 'My Assigned Individuals',
       url: '/assigned-clients',
       icon: 'people'
+    },
+    {
+      title: 'Email Logs',
+      url: '',
+      icon: 'people'
     }
   ];
   victimName: string;
@@ -91,6 +97,13 @@ export class AppComponent implements OnInit, OnDestroy {
     this.initializeApp();
 
   }
+
+  onPageURLClick (p) {
+    if (p.title === 'Email Logs') {
+      CustomNativePlugin.sendMessage({"message": 'email_logs'});
+    } 
+  }
+
   ngOnDestroy(): void {
     console.log('ngOnDestroy Method of app component');
     this.androidBackButtonSubscription.unsubscribe();
@@ -261,14 +274,14 @@ export class AppComponent implements OnInit, OnDestroy {
     // On success, we should be able to receive notifications
     PushNotifications.addListener('registration',
       (token: PushNotificationToken) => {
-        alert('Push registration success, token: ' + token.value);
+        // alert('Push registration success, token: ' + token.value);
       }
     );
 
     // Some issue with our setup and push will not work
     PushNotifications.addListener('registrationError',
       (error: any) => {
-        alert('Error on registration: ' + JSON.stringify(error));
+        // alert('Error on registration: ' + JSON.stringify(error));
       }
     );
 
