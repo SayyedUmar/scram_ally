@@ -69,7 +69,7 @@ export class AppComponent implements OnInit, OnDestroy {
     {
       title: 'Email Logs',
       url: '',
-      icon: 'people'
+      icon: 'mail'
     }
   ];
   victimName: string;
