@@ -101,7 +101,11 @@ export class AppComponent implements OnInit, OnDestroy {
   onPageURLClick (p) {
     if (p.title === 'Email Logs') {
       CustomNativePlugin.sendMessage({"message": 'email_logs'});
-    } 
+    } else if (p.title === 'Logout') {
+      this.authenticationService.logout();
+      this.router.navigate(['auth']);
+      CustomNativePlugin.customStopService();
+    }
   }
 
   ngOnDestroy(): void {
@@ -176,6 +180,15 @@ export class AppComponent implements OnInit, OnDestroy {
       this.checkIfTermsAndConditionAccepted();
     });
 
+    Device.getInfo().then(info => {
+      if (!info.isVirtual) {return;}
+      this.appPages = [...this.appPages, {
+        title: 'Logout',
+        url: '',
+        icon: 'logout'
+      }]
+    })
+  
   }
 
   initializeBackButtonCustomHandler(): void {
