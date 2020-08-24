@@ -283,7 +283,7 @@ export class HomepagePage implements OnInit {
       transmissionFrequency: 1,
       csq: 0,
       dateTime: new Date().toJSON(),
-      pushToken: (typeof this.pushNotificationToken != 'undefined' && this.pushNotificationToken) ? this.pushNotificationToken.value : 'NoToken',
+      pushToken: (typeof this.pushNotificationToken != 'undefined' && this.pushNotificationToken!=null) ? this.pushNotificationToken.value : 'NoToken',
       victimId: this.commonAPIService.victimDetails.victimId
     };
 
@@ -297,7 +297,7 @@ export class HomepagePage implements OnInit {
     this.logService.logDebug('HomePage', 'deviceRegistration', 'Calling deviceRegistrationAPI : ' +
       environment.gatewayUrl + environment.mobileDeviceConfigurationAPI);
 
-      console.log('deviceRegistration', this.mobileConfig)
+    console.log('deviceRegistration', this.mobileConfig)
     //this.commonAPIService.postDataWithInterceptorObservable(environment.mobileDeviceConfigurationAPI, mobileConfig)
     this.commonAPIService.postDataWithInterceptorObservable(environment.mobileDeviceRegisterDevice, mobileConfig)
       .toPromise()
