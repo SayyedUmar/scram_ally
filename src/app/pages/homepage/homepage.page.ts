@@ -710,7 +710,7 @@ export class HomepagePage implements OnInit {
 
   async initializePushResources() {
 
-    PushNotifications.register();
+
     PushNotifications.addListener(
       'registration',
       (token: PushNotificationToken) => {
@@ -751,6 +751,7 @@ export class HomepagePage implements OnInit {
           JSON.stringify(notification.notification.data) + ' ' + JSON.stringify(notification.notification.data.ExceptionLevel));
       }
     );
+    PushNotifications.register();
   }
   getDeviceName(): string {
     this.logService.logInfo('HomePage', 'getDeviceName()', 'Device Name: ' + this.deviceInfoService.getDeviceName());
