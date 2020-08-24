@@ -188,12 +188,12 @@ extension AppDelegate: CLLocationManagerDelegate {
             lastDate.addTimeInterval(1 * 60) // in seconds
             //print("lastDate: \(lastDate.toString("dd MM yyyy HH:mm:ss"))")
             if lastDate < now {
-                print("date is less than now")
+                //print("date is less than now")
                 UserDefaults.standard.set(now, forKey: "lastLocationTime")
                 updateLocation(manager, didUpdateLocations: locations)
                 callServerAPI(location: locations.last!)
             } else {
-                print("date is greater than now")
+                //print("date is greater than now")
             }
         }
         

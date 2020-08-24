@@ -739,6 +739,7 @@ export class HomepagePage implements OnInit {
 
     PushNotifications.addListener('pushNotificationReceived',
       (notification: PushNotification) => {
+        console.log('pushNotificationReceived', notification)
         this.isTappedPressed = false;
         this.getVictimDetailsOnNotifications(notification);
         this.logService.logDebug('HomePage', 'pushNotificationReceived()', 'Push received:' + notification + 'ExceptionLevel : + ' + JSON.stringify(notification.data) + ", " + notification.data.ExceptionLevel);
@@ -747,6 +748,7 @@ export class HomepagePage implements OnInit {
 
     PushNotifications.addListener('pushNotificationActionPerformed',
       (notification: PushNotificationActionPerformed) => {
+        console.log('PushNotificationActionPerformed', notification)
         this.isTappedPressed = true;
         this.getVictimDetailsOnNotifications(notification.notification);
         this.logService.logDebug('HomePage', 'PushNotificationActionPerformed()', 'Push action performed:' + JSON.stringify(notification) + 'ExceptionLevel : ' +
