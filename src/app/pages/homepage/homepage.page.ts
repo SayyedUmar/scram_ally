@@ -190,13 +190,12 @@ export class HomepagePage implements OnInit {
         this.initializePushResources();
       } else {
         // Show some error
-
+        this.getVictimDetailsAndRegisterDevice();
         this.logService.logError('HomePage', 'PushNotifications.requestPermissions()',
           'Error in Requesting PushNotifications.requestPermissions');
       }
     });
 
-    this.getVictimDetailsAndRegisterDevice();
     this.resetSwipeButton.subscribe(a => this.logService.logDebug('HomePage', 'eventSubscribtions', 'resetSwipeButton subscribed'));
     
   }
@@ -714,6 +713,7 @@ export class HomepagePage implements OnInit {
     PushNotifications.addListener(
       'registration',
       (token: PushNotificationToken) => {
+        console.log('PushNotificationsRegistration', token)
         this.logService.logInfo('HomePage', 'PushNotificationsRegistration()',
           'Push notifications successfully initialized. Token: ' + token.value);
 
@@ -725,6 +725,7 @@ export class HomepagePage implements OnInit {
         };
 
         this.pushDidInitialize = true;
+        this.getVictimDetailsAndRegisterDevice();
       }
     );
 
@@ -732,6 +733,7 @@ export class HomepagePage implements OnInit {
       this.logService.logError('HomePage', 'registrationError()',
         'Push notifications unsuccessfully initialized. Error: ' + JSON.stringify(error));
       this.pushDidInitialize = false;
+      this.getVictimDetailsAndRegisterDevice();
     });
     // );
 
