@@ -299,9 +299,10 @@ export class AuthenticationService extends IonicAuth implements OnDestroy {
   }
 
   async deviceValidationAPICall() {
+    console.log('deviceValidationAPICall', this.mobileConfig)
     this.commonAPIService.showLoader('Validating device...');
     await this.setDeviceValidationPayLoad().then(async payloadResponse => {
-      console.log(payloadResponse);
+      
       this.logService.logDebug('AuthenticationService', ' deviceValidationAPICall()', 'Registration PayLoad:');
       this.commonAPIService.postDataWithInterceptorObservable(environment.mobileDeviceValidateDevice, this.mobileConfig)
         .toPromise()

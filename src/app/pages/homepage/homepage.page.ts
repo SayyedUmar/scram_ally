@@ -15,6 +15,7 @@ import { IAppState } from 'src/app/provider/business-model/index';
 import { CommonAPIService } from 'src/app/provider/common-api/common-api.service';
 import { LogfileService } from 'src/app/provider/common-file/logfile.service';
 import { DeviceInfoService } from 'src/app/provider/device-api/device-info.service';
+import { UniqueDeviceID } from '@ionic-native/unique-device-id/ngx';
 
 import { environment } from 'src/environments/environment';
 import { stringify } from 'querystring';
@@ -98,7 +99,12 @@ export class HomepagePage implements OnInit {
     public modalController: ModalController,
     private events: Events, public router: Router, private zone: NgZone, private changeDetectorRef: ChangeDetectorRef,
     private store: Store<IAppState>, private authenticationService: AuthenticationService,
-    private badge: Badge, private logService: LogfileService, public alertController: AlertController) {
+    private badge: Badge, private logService: LogfileService, public alertController: AlertController,
+    private uniqueDeviceID: UniqueDeviceID) {
+
+      this.uniqueDeviceID.get()
+  .then((uuid: any) => console.log('uniqueDeviceID',uuid))
+  .catch((error: any) => console.log('uniqueDeviceID',error));
 
     this.getVictimDetailsFromStorage();
     this.pushNotificationToken = this.commonAPIService.globalPushToken;
@@ -288,6 +294,7 @@ export class HomepagePage implements OnInit {
     this.logService.logDebug('HomePage', 'deviceRegistration', 'Calling deviceRegistrationAPI : ' +
       environment.gatewayUrl + environment.mobileDeviceConfigurationAPI);
 
+      console.log('deviceRegistration', this.mobileConfig)
     //this.commonAPIService.postDataWithInterceptorObservable(environment.mobileDeviceConfigurationAPI, mobileConfig)
     this.commonAPIService.postDataWithInterceptorObservable(environment.mobileDeviceRegisterDevice, mobileConfig)
       .toPromise()
