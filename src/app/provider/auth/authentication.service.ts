@@ -11,6 +11,7 @@ import { environment } from 'src/environments/environment';
 import { CommonAPIService } from '../common-api/common-api.service';
 import { DeviceInfoService } from '../device-api/device-info.service';
 import { LogfileService } from '../common-file/logfile.service';
+import { UniqueDeviceID } from '@ionic-native/unique-device-id/ngx';
 
 const { Device, CustomNativePlugin } = Plugins;
 
@@ -71,7 +72,8 @@ export class AuthenticationService extends IonicAuth implements OnDestroy {
   constructor(router: Router, platform: Platform, commonAPIService: CommonAPIService, store: Store<IAppState>,
     deviceInfoService: DeviceInfoService,
     events: Events, handler: HttpBackend,
-    alertController: AlertController, private logService: LogfileService) {
+    alertController: AlertController, private logService: LogfileService,
+    private uniqueDeviceID: UniqueDeviceID) {
 
     super(auth0Config);
 
@@ -149,11 +151,18 @@ export class AuthenticationService extends IonicAuth implements OnDestroy {
     this.getSimInformation();
 
     CustomNativePlugin.sendTokenToApp({ 'token': token });
-    const info = Device.getInfo();
-    await info.then((data) => {
-      this.sendDeviceIMEItoNativeApp(data.uuid);
-      this.logService.logDebug('AuthenticationService', 'setToken()', 'deviceInformation: ' + JSON.stringify(this.deviceInformation));
-    });
+    // const info = Device.getInfo();
+    // await info.then((data) => {
+    //   this.sendDeviceIMEItoNativeApp(data.uuid);
+    //   this.logService.logDebug('AuthenticationService', 'setToken()', 'deviceInformation: ' + JSON.stringify(this.deviceInformation));
+    // });
+
+    this.uniqueDeviceID.get()
+    .then((uuid: any) => {
+      console.log('uniqueDeviceID',uuid)
+      this.sendDeviceIMEItoNativeApp(uuid);
+    })
+    .catch((error: any) => console.log('uniqueDeviceID',error));
 
     if (token) {
       // this.router.navigateByUrl('/homepage');
@@ -269,7 +278,9 @@ export class AuthenticationService extends IonicAuth implements OnDestroy {
   }
 
   async setDeviceValidationPayLoad(): Promise<boolean> {
-    await Device.getInfo().then(deviceInfo => this.deviceInfoAuth = deviceInfo);
+    //await Device.getInfo().then(deviceInfo => this.deviceInfoAuth = deviceInfo);
+    const uuid = await this.uniqueDeviceID.get()
+    this.deviceInfoAuth = {uuid}
 
     this.logService.logDebug('AuthenticationService', ' setRegistrationPayLoad()', 'Setting Registration PayLoad');
 

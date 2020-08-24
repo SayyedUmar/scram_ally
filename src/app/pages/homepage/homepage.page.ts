@@ -171,7 +171,10 @@ export class HomepagePage implements OnInit {
   }
   async ngOnInit() {
 
-    await Device.getInfo().then(deviceInfo => this.deviceInfo = deviceInfo);
+    const info = await Device.getInfo();
+    this.deviceInfo = info
+    const uuid = await this.uniqueDeviceID.get()
+    this.deviceInfo = {...info, uuid}
     this.setSwipeButton();
 
     this.commonAPIService.victimDetails = await this.commonAPIService.getStorageValue('loggedInVictimDetails');
