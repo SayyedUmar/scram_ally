@@ -44,6 +44,13 @@ extension AppDelegate {
             self.locationManager.stopUpdatingLocation()
             print("onStopMonitoringLocation")
         }
+        SwiftEventBus.onMainThread(self, name: "sendPanicAlertToServer") { result in
+            guard let result = result, let userInfo = result.userInfo as? [String : Any] else {
+                           print("sendPanicAlertToServer error")
+                           return}
+            self.sendPanicAlertToServer(info: userInfo)
+            print("sendPanicButtonNumberToApp")
+        }
         
     }
     
@@ -110,3 +117,18 @@ class Person {
         self.deviceId = dict["deviceId"] as! String
     }
 }
+
+class Event {
+    let eventType :String
+    let event:String
+    let eventData :[String:String]
+    let victimId :String
+    
+    init (dict: [String: Any], victimId: String, num: String) {
+        self.eventType = dict["eventType"] as? String ?? ""
+        self.event = dict["victimId"] as! String
+        self.eventData = ["Dialed Number": num]
+        self.victimId = victimId
+    }
+}
+

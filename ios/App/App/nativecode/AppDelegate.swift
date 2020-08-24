@@ -16,6 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let region_identifier = "scram_region_identifier"
     var geotification: Geotification?
     var initialLocation : CLLocation!
+    var lastLocation : CLLocation!
     var direction : CLHeading!
     var person: Person!
     
@@ -32,8 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        FileActions().writeToFile("Current Device - \(UIDevice().model) \(UIDevice().localizedModel), OS Version -\(UIDevice().systemVersion)")
-
+        FileActions().writeToFile("Current Device - \(UIDevice().name), OS Version -\(UIDevice().systemVersion)")
         // Override point for customization after application launch.
         self.detectInvoker(launchOptions:launchOptions)
         UIDevice.current.isBatteryMonitoringEnabled = true
@@ -212,7 +212,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         completionHandler(.noData)
     }
     
-    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+    func application(_ application: UIApplication,  iveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         print("didReceiveRemoteNotification", userInfo)
         
         if(application.applicationState == UIApplication.State.active) {

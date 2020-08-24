@@ -60,6 +60,19 @@ extension AppDelegate {
         
     }
     
+    func sendPanicAlertToServer (info: [String: Any]) {
+        if (self.person == nil || lastLocation == nil) {return}
+        guard let panicBtnNumber = info["panicBtnNumber"] as? String
+//            let deviceUDID = info["deviceUDID"] as? String,
+//            let victimDetailsPanic = info["victimDetailsPanic"] as? String
+            else {return}
+        let event:[String : Any] = ["eventType":"Button Pressed", "event": "Panic Button Pressed",
+                                    "eventData":["name":"Dialed Number", "value":panicBtnNumber], "victimId":self.person.victimId]
+        let body = getPostData(location: lastLocation, event:event)
+        print("sendPanicAlertToServer", body)
+        callAPI(body: body)
+    }
+    
     func callDummyApi (location: CLLocation?) {
 //        let coord = location.coordinate
 //        let url = URL(string: "https://jsonplaceholder.typicode.com/todos/1")!
@@ -97,105 +110,7 @@ extension AppDelegate {
 //                }
 //        }
     }
-    func callServerAPI (location: CLLocation) {
-        let c = location.coordinate
-        let body = getPostData(location: location).toData
-        print("body- \(getPostData(location: location))")
-        
-        #if targetEnvironment(simulator)
-        print("device is simulator")
-        return;
-        #endif
-        print("device is real")
-        
-        FileActions1().writeToFile("location_status=\(getLocationSerStatus()), internet=\(Reachability.isConnectedToNetwork()) lat:\(c.latitude), lng: \(c.longitude), accuracy:\(location.horizontalAccuracy)")
-        
-        FileActions2().writeToFile("location_status=\(getLocationSerStatus()), internet=\(Reachability.isConnectedToNetwork()) request=\(body!.toString)")
-        
-        let url = URL(string: "https://allymobileapigateway.scramstage.com/api/v1/NativeMobile/Location")!
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.httpBody = body
-        print("location- ", c.latitude, c.longitude)
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        
-//        Alamofire.request("http://localhost:8004/testAPI",method: .get, parameters: [:], headers: [:])
-//            //         .validate(contentType: [contentType])
-//            .responseJSON { (response) in
-//
-////                switch response.result {
-////                case .success:
-////                    break;
-////                case .failure(let error):
-////                    break;
-////                }
-//                guard let statusCode = response.response?.statusCode else {return}
-//                if (statusCode == 200) {
-//                    print("API Call Successful", statusCode)
-//                    FileActions1().writeToFile("API Call Successful:statusCode:\(statusCode)")
-//                    FileActions2().writeToFile("API Call Successful:statusCode:\(statusCode)")
-//
-//                } else {
-//                    print("API Call Failed", statusCode)
-//                    if let value = response.data {
-//                        //let json = JSON(value)
-//                        FileActions1().writeToFile("API Call Failed: statusCode:\(statusCode), error:\(value.toString)")
-//                        FileActions2().writeToFile("API Call Failed: statusCode:\(statusCode), error:\(value.toString)")
-//                    } else {
-//                    }
-//                }
-//
-//        }
-        URLSession.shared.dataTask(with: request) { (data, response, error) in
-            guard let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
-                let d = data, error == nil
-                else {
-                    if let res = response as? HTTPURLResponse, let data = data {
-                        FileActions1().writeToFile("API Call Failed: statusCode:\(res.statusCode), error:\(data.toString)")
-                        FileActions2().writeToFile("API Call Failed: statusCode:\(res.statusCode), error:\(data.toString)")
-                        self.sendDataToIonic(info: ["lat":c.latitude, "lng": c.longitude,
-                                                    "statusCode": res.statusCode,
-                                                    "response": data.toString,
-                                                    "request": body!.toString
-                        ])
-                    }
-
-                    return
-            }
-            FileActions1().writeToFile("API Call Successful:statusCode:\(httpURLResponse.statusCode)")
-            FileActions2().writeToFile("API Call Successful:statusCode:\(httpURLResponse.statusCode)")
-            self.sendDataToIonic(info: ["lat":c.latitude, "lng": c.longitude, "statusCode": httpURLResponse.statusCode])
-        }.resume()
-    }
     
-    func getPostData (location: CLLocation) -> [[String: Any]] {
-        return [[
-            "victimId": self.person.victimId,
-            "deviceImei": self.person.deviceId,
-//            "victimId": "84C515A8-A00D-4E06-81B4-48592351C096",
-//            "deviceImei": "9233c89d05d89799",
-            "timestamp": Date().toUTCString("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"),
-            "latitude": location.coordinate.latitude,
-            "longitude": location.coordinate.longitude,
-            "altitude": location.altitude,
-            "accuracy": location.horizontalAccuracy,
-            "altitudeAccuracy": location.verticalAccuracy,
-            "direction": direction == nil ? 0 : direction.magneticHeading,
-            "speed": location.speed,
-            "satellite": 0,
-            "csq": 0,
-            "isMoving": false, //calculated based on activityType
-            "fix": 0, //zero
-            "address": "address",
-            "locationMode": "A",
-            "eventType": "Location",
-            "cacheTimeStamp": location.timestamp.toUTCString("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"),
-            "activityType": "activityType",
-            "activityConfidence": -1,
-            "batteryLevel": Double(round(1000*UIDevice.current.batteryLevel*100)/1000),
-            "isBatteryCharging": UIDevice.current.batteryState == .charging ? true : false,
-        ]]
-    }
     
     func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
         direction = newHeading
@@ -267,7 +182,7 @@ extension AppDelegate: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
 //        self.locationManager.stopUpdatingLocation()
 //        let lastLocation = locations.last!
-        
+        lastLocation = locations.last
         if var lastDate = UserDefaults.standard.value(forKey: "lastLocationTime") as? Date {
             let now = Date()
             lastDate.addTimeInterval(1 * 60) // in seconds

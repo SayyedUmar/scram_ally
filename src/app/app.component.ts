@@ -37,7 +37,7 @@ interface CustomNativePlugin {
   appendLog(): Promise<any>;
 }
 
-const { Network, CustomNativePlugin, PushNotifications } = Plugins;
+const { Device, Network, CustomNativePlugin, PushNotifications } = Plugins;
 
 @Component({
   selector: 'app-root',
@@ -196,7 +196,9 @@ export class AppComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl('/profile');
   }
 
-  logOutCall() {
+  async logOutCall() {
+    const info = await Device.getInfo();
+    if (!info.isVirtual) {return;}
     this.authenticationService.logout();
     this.router.navigate(['auth']);
     CustomNativePlugin.customStopService();
@@ -221,7 +223,6 @@ export class AppComponent implements OnInit, OnDestroy {
       this.appVersionNumber = 'v' + this.commonAPIService.appVersionNumber;
       console.log('App Version Number : ' + this.commonAPIService.appVersionNumber);
     });
-
   }
 
   ifAllPermissionsGranted() {
