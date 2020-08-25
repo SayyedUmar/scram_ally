@@ -50,7 +50,9 @@ export class NotificationsService {
         this.commonAPIService.startTimer();
         this.commonAPIService.presentAlertConfirmCommon('Allow Ally to send Push Notification?', 'Notifications May include alerts. These can be configured in settings');
       } else {
-        this.commonAPIService.pauseTimer();
+        this.checkIfLocationEnabled();
+        this.checkIfLocationAuthorized();
+        // this.commonAPIService.pauseTimer();
       }
       if (this.isNotificationsEnabled === data) {
 
@@ -58,6 +60,29 @@ export class NotificationsService {
         console.log('Send push notification message to server: ');
         this.isNotificationsEnabled = data;
         // tslint:disable-next-line:max-line-length
+      }
+    })
+  }
+
+  async checkIfLocationAuthorized() {
+    await this.diagnostic.getLocationAuthorizationStatus().then(status => {
+      //authorized_when_in_use | denied_always
+      console.log('checkIfLocationAuthorized : ' + status);
+      // if (success === true) {
+      //   this.commonAPIService.presentAlertConfirmCommon('Allow Location Service', 'Ally App needs to access location service to track the current user location');
+      // } else {
+      //   this.commonAPIService.pauseTimer();
+      // }
+    })
+  }
+
+  async checkIfLocationEnabled() {
+    await this.diagnostic.isLocationAvailable().then(success => { 
+      console.log('checkIfLocationEnabled : ' + success);
+      if (success === true) {
+        this.commonAPIService.presentAlertConfirmCommon('Allow Location Service', 'Ally App needs to access location service to track the current user location');
+      } else {
+        this.commonAPIService.pauseTimer();
       }
     })
   }

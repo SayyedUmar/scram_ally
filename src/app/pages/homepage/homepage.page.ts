@@ -21,6 +21,8 @@ import { environment } from 'src/environments/environment';
 import { stringify } from 'querystring';
 import { JsonPipe } from '@angular/common';
 // import { FCM } from '@ionic-native/fcm/ngx';
+import { Diagnostic } from '@ionic-native/diagnostic/ngx';
+
 
 
 const { PushNotifications, Device, LocalNotifications, CustomNativePlugin } = Plugins;
@@ -102,8 +104,11 @@ export class HomepagePage implements OnInit {
     private store: Store<IAppState>, private authenticationService: AuthenticationService,
     private badge: Badge, private logService: LogfileService, public alertController: AlertController,
     private uniqueDeviceID: UniqueDeviceID,
-    // private fcm: FCM
+    // private fcm: FCM,
+    private diagnostic: Diagnostic,
     ) {
+
+      console.log
 
       this.uniqueDeviceID.get()
   .then((uuid: any) => console.log('uniqueDeviceID',uuid))
