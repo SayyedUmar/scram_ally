@@ -59,7 +59,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print(FileActions().getPath())
         print(FileActions1().getPath())
         print(FileActions2().getPath())
-        //self.setUpFirebase(app: application)
+        self.setUpFirebase(app: application)
         self.requestPermission()
         
         //        self.callDummyApi1()

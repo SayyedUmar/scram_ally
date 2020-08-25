@@ -20,7 +20,7 @@ import { UniqueDeviceID } from '@ionic-native/unique-device-id/ngx';
 import { environment } from 'src/environments/environment';
 import { stringify } from 'querystring';
 import { JsonPipe } from '@angular/common';
-import { FCM } from '@ionic-native/fcm/ngx';
+// import { FCM } from '@ionic-native/fcm/ngx';
 
 
 const { PushNotifications, Device, LocalNotifications, CustomNativePlugin } = Plugins;
@@ -102,7 +102,8 @@ export class HomepagePage implements OnInit {
     private store: Store<IAppState>, private authenticationService: AuthenticationService,
     private badge: Badge, private logService: LogfileService, public alertController: AlertController,
     private uniqueDeviceID: UniqueDeviceID,
-    private fcm: FCM) {
+    // private fcm: FCM
+    ) {
 
       this.uniqueDeviceID.get()
   .then((uuid: any) => console.log('uniqueDeviceID',uuid))
@@ -762,28 +763,28 @@ export class HomepagePage implements OnInit {
     PushNotifications.register();
     //this.fcm.subscribeToTopic('marketing');
 
-    this.fcm.getToken().then(token => {
-      console.log("getToken", token)
-    });
+    // this.fcm.getToken().then(token => {
+    //   console.log("getToken", token)
+    // });
 
-    this.fcm.onNotification().subscribe(data => {
-      if(data.wasTapped){
-        console.log("Received in background");
-      } else {
-        console.log("Received in foreground");
-      };
-    });
+    // this.fcm.onNotification().subscribe(data => {
+    //   if(data.wasTapped){
+    //     console.log("Received in background");
+    //   } else {
+    //     console.log("Received in foreground");
+    //   };
+    // });
 
-    this.fcm.onTokenRefresh().subscribe(token => {
-      console.log("onTokenRefresh", token)
-      //backend.registerToken(token);
-    });
+    // this.fcm.onTokenRefresh().subscribe(token => {
+    //   console.log("onTokenRefresh", token)
+    //   //backend.registerToken(token);
+    // });
 
-    this.fcm.hasPermission().then(hasPermission => {
-      if (hasPermission) {
-        console.log("Has permission!");
-      }
-    })
+    // this.fcm.hasPermission().then(hasPermission => {
+    //   if (hasPermission) {
+    //     console.log("Has permission!");
+    //   }
+    // })
 
     // this.fcm.clearAllNotifications();
 
