@@ -126,7 +126,7 @@ export class AppComponent implements OnInit, OnDestroy {
         setTimeout(() => {
           this.notificationsService.checkIsRemoteNotificationsEnabled();
           // this.notificationsService.checkIfLocationEnabled();
-          this.notificationsService.checkIfLocationAuthorized();
+          // this.notificationsService.checkIfLocationAuthorized();
         }, 2000);
       }, error => {
         console.log('Error in app resume..');

@@ -50,8 +50,7 @@ export class NotificationsService {
         this.commonAPIService.startTimer();
         this.commonAPIService.presentAlertConfirmCommon('Allow Ally to send Push Notification?', 'Notifications May include alerts. These can be configured in settings');
       } else {
-        this.checkIfLocationEnabled();
-        this.checkIfLocationAuthorized();
+        this.checkIfLocationEnabled()
         // this.commonAPIService.pauseTimer();
       }
       if (this.isNotificationsEnabled === data) {
@@ -64,23 +63,24 @@ export class NotificationsService {
     })
   }
 
-  async checkIfLocationAuthorized() {
-    await this.diagnostic.getLocationAuthorizationStatus().then(status => {
-      //authorized_when_in_use | denied_always
-      console.log('checkIfLocationAuthorized : ' + status);
-      // if (success === true) {
-      //   this.commonAPIService.presentAlertConfirmCommon('Allow Location Service', 'Ally App needs to access location service to track the current user location');
-      // } else {
-      //   this.commonAPIService.pauseTimer();
-      // }
-    })
-  }
-
   async checkIfLocationEnabled() {
     await this.diagnostic.isLocationAvailable().then(success => { 
       console.log('checkIfLocationEnabled : ' + success);
       if (success === false) {
-        this.commonAPIService.presentAlertConfirmCommon('Allow Location Service', 'Ally App needs to access location service to track the current user location');
+        this.commonAPIService.presentAlertConfirmCommon('Allow Location Service', 'Ally App needs to access location service to track the current user location')
+      } else {
+        this.checkIfLocationAuthorized()
+        // this.commonAPIService.pauseTimer();
+      }
+    })
+  }
+
+  async checkIfLocationAuthorized() {
+    await this.diagnostic.getLocationAuthorizationStatus().then(status => {
+      //authorized_when_in_use | denied_always
+      console.log('checkIfLocationAuthorized : ' + status);
+      if (status === 'denied_always') {
+        this.commonAPIService.presentAlertConfirmCommon('Allow Location Service', 'Ally App needs to access location service access as Allow Always')
       } else {
         this.commonAPIService.pauseTimer();
       }
