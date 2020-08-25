@@ -12,6 +12,4 @@
     s.dependency 'CapacitorCordova'
     s.swift_version  = '4.0'
     s.static_framework = true
-    s.dependency 'Firebase/Analytics'
-    s.dependency 'Firebase/Messaging'
   end
