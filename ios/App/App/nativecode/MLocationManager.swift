@@ -45,15 +45,15 @@ extension AppDelegate {
     }
     
     func startLocationUpdate(){
-        if (getLocationSerStatus() != "AuthorizedAlways") {
+        if (!getLocationSerStatus().contains("AuthorizedAlways")) {
             requestPermission()
         }
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.activityType = CLActivityType.fitness
-        locationManager.distanceFilter = kCLDistanceFilterNone
-        locationManager.allowsBackgroundLocationUpdates = true
-        locationManager.pausesLocationUpdatesAutomatically = false
+//        locationManager.delegate = self
+//        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+//        locationManager.activityType = CLActivityType.fitness
+//        locationManager.distanceFilter = kCLDistanceFilterNone
+//        locationManager.allowsBackgroundLocationUpdates = true
+//        locationManager.pausesLocationUpdatesAutomatically = false
         
         locationManager.startUpdatingLocation()
         locationManager.startUpdatingHeading()
@@ -150,7 +150,11 @@ extension AppDelegate {
                 case .authorizedWhenInUse:
                     return "AuthorizedWhenInUse"
                 case .authorizedAlways:
-                    return "AuthorizedAlways"
+                    var locStatus = ""
+                    if (UserDefaults.standard.value(forKey: "LocationService")) != nil {
+                        locStatus = UserDefaults.standard.value(forKey: "LocationService") as! String
+                    }
+                    return "\(locStatus)AuthorizedAlways"
                 @unknown default:
                     return "Unknown"
                 }
@@ -227,7 +231,13 @@ extension AppDelegate: CLLocationManagerDelegate {
                 print("date is less than now")
                 UserDefaults.standard.set(now, forKey: "lastLocationTime")
                 updateLocation(manager, didUpdateLocations: locations)
-                callServerAPI(location: locations.last!)
+                let lastLocation = locations.last!
+                if (lastLocation.coordinate.latitude == 0.0 || lastLocation.coordinate.longitude == 0.0 || lastLocation.horizontalAccuracy == 2500.0) {
+                    self.locationManager.stopUpdatingLocation()
+                    self.locationManager.startUpdatingLocation()
+                }
+                FileActions1().writeToFile("Location Manager : Service enabled - \(CLLocationManager.locationServicesEnabled()), Allows Bg update - \(self.locationManager.allowsBackgroundLocationUpdates), Bg Loc Indicator - \(self.locationManager.showsBackgroundLocationIndicator), Heading filter - \(self.locationManager.headingFilter), Heading Ori -\(self.locationManager.headingOrientation), Max reg Dist - \(self.locationManager.maximumRegionMonitoringDistance)")
+                callServerAPI(location: lastLocation)
                 checkBatteryAndInternetStatus()
             } else {
                 print("date is greater than now")
@@ -298,7 +308,13 @@ extension AppDelegate: CLLocationManagerDelegate {
         case .authorizedAlways:
             print("authorizedAlways")
             sendDeviceEvents(eventType: "Location Service", eventName: "Enabled")
-            FileActions().writeToFile("Loc authorization status changed to authorized Always")
+            if (UserDefaults.standard.value(forKey: "LocationService") as? String) == nil {
+                UserDefaults.standard.set("Provisional", forKey: "LocationService")
+                FileActions().writeToFile("Loc authorization status changed to provisional Always")
+            } else {
+                UserDefaults.standard.set("Confirmed", forKey: "LocationService")
+                FileActions().writeToFile("Loc authorization status changed to authorized Always")
+            }
             break
         case .authorizedWhenInUse:
             print("authorizedWhenInUse")

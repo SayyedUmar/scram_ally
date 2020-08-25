@@ -38,6 +38,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.detectInvoker(launchOptions:launchOptions)
         UIDevice.current.isBatteryMonitoringEnabled = true
         
+        // -- Calling location delegate
+        configureLocationManager()
+        
         var arr = [""]
         if let ar = UserDefaults.standard.array(forKey: "MY_AARY") {
             arr = ar as! [String]
@@ -75,6 +78,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        self.startLocationUpdate()
         self.subscribeBusEvents()
         return true
+    }
+    
+    func configureLocationManager() {
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.activityType = CLActivityType.fitness
+        locationManager.distanceFilter = kCLDistanceFilterNone
+        locationManager.allowsBackgroundLocationUpdates = true
+        locationManager.pausesLocationUpdatesAutomatically = false
     }
     
     func setUpFirebase (app:UIApplication) {
