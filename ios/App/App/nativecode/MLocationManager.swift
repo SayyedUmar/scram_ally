@@ -67,7 +67,7 @@ extension AppDelegate {
 //            let victimDetailsPanic = info["victimDetailsPanic"] as? String
             else {return}
         let event:[String : Any] = ["eventType":"Button Pressed", "event": "Panic Button Pressed",
-                                    "eventData":["name":"Dialed Number", "value":panicBtnNumber], "victimId":self.person.victimId]
+                                    "eventData":[["name":"Dialed Number", "value":panicBtnNumber]], "victimId":self.person.victimId]
         let body = getPostData(location: lastLocation, event:event)
         print("sendPanicAlertToServer", body)
         callAPI(body: body)
@@ -109,13 +109,6 @@ extension AppDelegate {
 //                } else {
 //                }
 //        }
-    }
-    
-    
-    func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
-        direction = newHeading
-        //print("direction = magneticHeading:\(direction.magneticHeading), trueHeading:\(direction.trueHeading))")
-        //scheduleLocalNotification(title: "Ally", body: "New Directon: \(direction.trueHeading):\(direction.magneticHeading)", info: nil)
     }
     
     func stopMonitoring(geotification: Geotification) {
@@ -166,9 +159,52 @@ extension AppDelegate {
               return "Location services is not enabled"
         }
     }
+    
+    func checkBatteryAndInternetStatus () {
+        if (Reachability.isConnectedToNetwork()){
+            //No Communication
+        } else {
+            
+        }
+        let battery = Double(round(1000*UIDevice.current.batteryLevel*100)/1000)
+        let isCharging = UIDevice.current.batteryState == UIDevice.BatteryState.charging
+        let isBatteryLow = UserDefaults.standard.bool(forKey: "isBatteryLow")
+        if (battery >= 40.0 && isBatteryLow) { //Battery Low Clear
+            sendBatteryEvents(isCharging, Int(battery), eventType: "Battery Low Clear")
+        } else if (battery < 21 && !isBatteryLow) { // Battery Low Clear
+            UserDefaults.standard.setValue(false, forKey: "isBatteryLow")
+            sendBatteryEvents(isCharging, Int(battery), eventType: "Battery Low")
+        }
+    }
+    
+    func sendBatteryEvents (_ isCharging: Bool,_  battery: Int, eventType: String) {
+        if (person == nil || lastLocation == nil) {return}
+        let event:[String : Any] = ["eventType":eventType, "event": "Battery",
+                                "eventData":[
+        ["name":"BatteryStatus", "value":"\(battery)"],
+        ["name":"ChargingStatus", "value":isCharging ? "0" : "4"]
+        ], "victimId":self.person.victimId]
+        let body = getPostData(location: lastLocation, event:event)
+        print("sendBatteryEvents", body)
+        callAPI(body: body)
+    }
+    func sendDeviceEvents (eventType: String, eventName: String) {
+        if (person == nil || lastLocation == nil) {return}
+        let event:[String : Any] = ["eventType":eventType, "event": eventName,
+                                    "eventData":[["":""]], "victimId":self.person.victimId]
+        let body = getPostData(location: lastLocation, event:event)
+        print("sendDeviceEvents", body)
+        callAPI(body: body)
+    }
 }
 
 extension AppDelegate: CLLocationManagerDelegate {
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
+        direction = newHeading
+        //print("direction = magneticHeading:\(direction.magneticHeading), trueHeading:\(direction.trueHeading))")
+        //scheduleLocalNotification(title: "Ally", body: "New Directon: \(direction.trueHeading):\(direction.magneticHeading)", info: nil)
+    }
     
     private func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
         //self.locationManager.stopUpdatingLocation()
@@ -186,14 +222,15 @@ extension AppDelegate: CLLocationManagerDelegate {
         if var lastDate = UserDefaults.standard.value(forKey: "lastLocationTime") as? Date {
             let now = Date()
             lastDate.addTimeInterval(1 * 60) // in seconds
-            //print("lastDate: \(lastDate.toString("dd MM yyyy HH:mm:ss"))")
+//            print("lastDate: \(lastDate.toString("dd MM yyyy HH:mm:ss"))")
             if lastDate < now {
-                //print("date is less than now")
+                print("date is less than now")
                 UserDefaults.standard.set(now, forKey: "lastLocationTime")
                 updateLocation(manager, didUpdateLocations: locations)
                 callServerAPI(location: locations.last!)
+                checkBatteryAndInternetStatus()
             } else {
-                //print("date is greater than now")
+                print("date is greater than now")
             }
         }
         
@@ -254,11 +291,20 @@ extension AppDelegate: CLLocationManagerDelegate {
         
         switch status {
         case .notDetermined, .restricted, .denied:
+            print(".notDetermined, .restricted, .denied")
+            sendDeviceEvents(eventType: "Location Service", eventName: "Disabled")
             FileActions().writeToFile("Loc authorization status changed to Not accessible")
+            break
         case .authorizedAlways:
+            print("authorizedAlways")
+            sendDeviceEvents(eventType: "Location Service", eventName: "Enabled")
             FileActions().writeToFile("Loc authorization status changed to authorized Always")
+            break
         case .authorizedWhenInUse:
+            print("authorizedWhenInUse")
+            sendDeviceEvents(eventType: "Location Service", eventName: "Enabled")
             FileActions().writeToFile("Loc authorization status changed to authorized When In Use")
+            break
         @unknown default:
             FileActions().writeToFile("Loc authorization status change error occured")
         }

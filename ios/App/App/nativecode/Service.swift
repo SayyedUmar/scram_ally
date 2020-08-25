@@ -119,7 +119,7 @@ extension AppDelegate {
         body["victimId"] = event["victimId"] as! String
         body["eventType"] = event["eventType"] as! String
         body["event"] = event["event"] as! String
-        body["eventData"] = [event["eventData"] as! [String:String]]
+        body["eventData"] = event["eventData"] as! [[String:String]]
         body["timestamp"] = Date().toUTCString("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
         body["location"] = location[0]
         body[ "deviceImei"] = self.person.deviceId

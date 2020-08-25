@@ -2,18 +2,7 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "splash.png",
-      "scale" : "1x"
-    },
-    {
-      "idiom" : "universal",
-      "filename" : "splash-1.png",
-      "scale" : "2x"
-    },
-    {
-      "idiom" : "universal",
-      "filename" : "splash-2.png",
-      "scale" : "3x"
+      "filename" : "ALLY_Splash2732.png"
     }
   ],
   "info" : {

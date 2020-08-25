@@ -59,7 +59,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print(FileActions().getPath())
         print(FileActions1().getPath())
         print(FileActions2().getPath())
-        self.setUpFirebase(app: application)
+        //self.setUpFirebase(app: application)
         self.requestPermission()
         
         //        self.callDummyApi1()
@@ -193,7 +193,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 NotificationCenter.default.post(name: Notification.Name(CAPNotifications.DidRegisterForRemoteNotificationsWithDeviceToken.name()), object: result.token)
             }
         }
-//        NotificationCenter.default.post(name: Notification.Name(CAPNotifications.DidRegisterForRemoteNotificationsWithDeviceToken.name()), object: deviceToken)
+        NotificationCenter.default.post(name: Notification.Name(CAPNotifications.DidRegisterForRemoteNotificationsWithDeviceToken.name()), object: deviceToken)
     }
     
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
@@ -212,21 +212,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         completionHandler(.noData)
     }
     
-    func application(_ application: UIApplication,  iveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        print("didReceiveRemoteNotification", userInfo)
-        
-        if(application.applicationState == UIApplication.State.active) {
-            //app is currently active, can update badges count here
-            FileActions1().writeToFile("didReceiveRemoteNotification_UIApplicationStateActive")
-        }else if(application.applicationState ==  UIApplication.State.background){
-            //app is in background, if content-available key of your notification is set to 1, poll to your backend to retrieve data and update your interface here
-            FileActions1().writeToFile("didReceiveRemoteNotification_UIApplicationStateBackground")
-            self.startLocationUpdate()
-        }else if(application.applicationState ==  UIApplication.State.inactive){
-            //app is transitioning from background to foreground (user taps notification), do what you need when user taps here
-            FileActions1().writeToFile("didReceiveRemoteNotification_UIApplicationStateInactive")
-        }
+    
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {
+        print("didReceiveRemoteNotification")
     }
+    
+//  func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any],                      fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+//        print("didReceiveRemoteNotification, fetchCompletionHandler")
+//
+//        if(application.applicationState == UIApplication.State.active) {
+//            //app is currently active, can update badges count here
+//            FileActions1().writeToFile("didReceiveRemoteNotification_UIApplicationStateActive")
+//        }else if(application.applicationState ==  UIApplication.State.background){
+//            //app is in background, if content-available key of your notification is set to 1, poll to your backend to retrieve data and update your interface here
+//            FileActions1().writeToFile("didReceiveRemoteNotification_UIApplicationStateBackground")
+//            self.startLocationUpdate()
+//        }else if(application.applicationState ==  UIApplication.State.inactive){
+//            //app is transitioning from background to foreground (user taps notification), do what you need when user taps here
+//            FileActions1().writeToFile("didReceiveRemoteNotification_UIApplicationStateInactive")
+//        }
+//    }
 }
 
 

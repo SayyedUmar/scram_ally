@@ -137,6 +137,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
       Network.addListener('networkStatusChange', (status) => {
         console.log('Network status changed', status);
+        if (status['connected'] === true) {alert('Internet is required!')}
         this.commonAPIService.networkStatus = status;
       });
 

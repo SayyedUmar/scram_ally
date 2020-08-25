@@ -20,6 +20,7 @@ import { UniqueDeviceID } from '@ionic-native/unique-device-id/ngx';
 import { environment } from 'src/environments/environment';
 import { stringify } from 'querystring';
 import { JsonPipe } from '@angular/common';
+import { FCM } from '@ionic-native/fcm/ngx';
 
 
 const { PushNotifications, Device, LocalNotifications, CustomNativePlugin } = Plugins;
@@ -100,7 +101,8 @@ export class HomepagePage implements OnInit {
     private events: Events, public router: Router, private zone: NgZone, private changeDetectorRef: ChangeDetectorRef,
     private store: Store<IAppState>, private authenticationService: AuthenticationService,
     private badge: Badge, private logService: LogfileService, public alertController: AlertController,
-    private uniqueDeviceID: UniqueDeviceID) {
+    private uniqueDeviceID: UniqueDeviceID,
+    private fcm: FCM) {
 
       this.uniqueDeviceID.get()
   .then((uuid: any) => console.log('uniqueDeviceID',uuid))
@@ -739,6 +741,7 @@ export class HomepagePage implements OnInit {
 
     PushNotifications.addListener('pushNotificationReceived',
       (notification: PushNotification) => {
+        alert('Push received: ' + JSON.stringify(notification));
         console.log('pushNotificationReceived', notification)
         this.isTappedPressed = false;
         this.getVictimDetailsOnNotifications(notification);
@@ -748,6 +751,7 @@ export class HomepagePage implements OnInit {
 
     PushNotifications.addListener('pushNotificationActionPerformed',
       (notification: PushNotificationActionPerformed) => {
+        alert('Push action performed: ' + JSON.stringify(notification));
         console.log('PushNotificationActionPerformed', notification)
         this.isTappedPressed = true;
         this.getVictimDetailsOnNotifications(notification.notification);
@@ -756,6 +760,34 @@ export class HomepagePage implements OnInit {
       }
     );
     PushNotifications.register();
+    //this.fcm.subscribeToTopic('marketing');
+
+    this.fcm.getToken().then(token => {
+      console.log("getToken", token)
+    });
+
+    this.fcm.onNotification().subscribe(data => {
+      if(data.wasTapped){
+        console.log("Received in background");
+      } else {
+        console.log("Received in foreground");
+      };
+    });
+
+    this.fcm.onTokenRefresh().subscribe(token => {
+      console.log("onTokenRefresh", token)
+      //backend.registerToken(token);
+    });
+
+    this.fcm.hasPermission().then(hasPermission => {
+      if (hasPermission) {
+        console.log("Has permission!");
+      }
+    })
+
+    // this.fcm.clearAllNotifications();
+
+    // this.fcm.unsubscribeFromTopic('marketing');
   }
   getDeviceName(): string {
     this.logService.logInfo('HomePage', 'getDeviceName()', 'Device Name: ' + this.deviceInfoService.getDeviceName());

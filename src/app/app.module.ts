@@ -37,6 +37,7 @@ import { TermsConditionsPageModule } from './pages/terms-conditions/terms-condit
 import { InterceptorService } from './provider/interceptor/interceptor.service';
 import { SharedModule } from './shared/shared.module';
 import { metaReducers, reducers } from './store/reducers';
+import { FCM } from '@ionic-native/fcm/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -83,6 +84,7 @@ import { metaReducers, reducers } from './store/reducers';
     BackgroundMode,
     AndroidPermissions,
     Badge,
+    FCM,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     {
       provide: HTTP_INTERCEPTORS,

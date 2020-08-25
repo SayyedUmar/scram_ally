@@ -43,6 +43,7 @@ dependencies {
     implementation "com.android.support:customtabs:26.1.0"
     implementation "com.squareup.okhttp3:okhttp-urlconnection:3.10.0"
     implementation "com.squareup.okhttp3:okhttp-urlconnection:3.10.0"
+    implementation "com.google.firebase:firebase-messaging:19.0.0"
     implementation "com.google.android.gms:play-services-location:16.+"
     implementation "com.android.support:support-v4:28.+"
     implementation "com.android.support:appcompat-v7:28.+"
@@ -54,6 +55,7 @@ apply from: "cordova.variables.gradle"
 apply from: "../../node_modules/@ionic-enterprise/auth/build/android/SecureWebView-java18.gradle"
 apply from: "../../node_modules/cordova-plugin-background-fetch/src/android/build.gradle"
 apply from: "../../node_modules/cordova-plugin-badge/src/android/badge.gradle"
+apply from: "../../node_modules/cordova-plugin-fcm-with-dependecy-updated/src/android/FCMPlugin.gradle"
 // PLUGIN GRADLE EXTENSIONS END
 
 for (def func : cdvPluginPostBuildExtras) {
