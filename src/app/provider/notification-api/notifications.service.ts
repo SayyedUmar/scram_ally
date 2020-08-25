@@ -79,7 +79,7 @@ export class NotificationsService {
   async checkIfLocationEnabled() {
     await this.diagnostic.isLocationAvailable().then(success => { 
       console.log('checkIfLocationEnabled : ' + success);
-      if (success === true) {
+      if (success === false) {
         this.commonAPIService.presentAlertConfirmCommon('Allow Location Service', 'Ally App needs to access location service to track the current user location');
       } else {
         this.commonAPIService.pauseTimer();
