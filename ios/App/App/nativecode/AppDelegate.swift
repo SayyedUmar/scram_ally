@@ -80,15 +80,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-    func configureLocationManager() {
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.activityType = CLActivityType.fitness
-        locationManager.distanceFilter = kCLDistanceFilterNone
-        locationManager.allowsBackgroundLocationUpdates = true
-        locationManager.pausesLocationUpdatesAutomatically = false
-    }
-    
     func setUpFirebase (app:UIApplication) {
         //Access the registration token
 

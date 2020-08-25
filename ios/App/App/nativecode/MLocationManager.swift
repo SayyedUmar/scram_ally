@@ -44,6 +44,15 @@ extension AppDelegate {
         //self.locationManager.requestWhenInUseAuthorization()
     }
     
+    func configureLocationManager() {
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.activityType = CLActivityType.fitness
+        locationManager.distanceFilter = kCLDistanceFilterNone
+        locationManager.allowsBackgroundLocationUpdates = true
+        locationManager.pausesLocationUpdatesAutomatically = false
+    }
+    
     func startLocationUpdate(){
         if (!getLocationSerStatus().contains("AuthorizedAlways")) {
             requestPermission()
