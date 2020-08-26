@@ -138,8 +138,8 @@ extension AppDelegate {
             "accuracy": location.horizontalAccuracy,
             "altitudeAccuracy": location.verticalAccuracy,
             //"direction": direction == nil ? 0 : direction.magneticHeading,
-            "direction": String.init(format: "%.7f", location.course.magnitude),
-            "speed": String.init(format: "%.7f", location.speed.magnitude),
+            "direction": Double(String.init(format: "%.7f", location.course.magnitude))!,
+            "speed": Double(String.init(format: "%.7f", location.speed.magnitude))!,
             "satellite": 0,
             "csq": 0, //hardcoded
             
@@ -189,7 +189,7 @@ extension CLPlacemark {
                add += p + ", "
            }
            if let p = self.postalCode {
-               add += p + ", "
+               add += p
            }
            return add
        }
