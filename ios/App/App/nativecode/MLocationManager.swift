@@ -263,7 +263,7 @@ extension AppDelegate: CLLocationManagerDelegate {
                     self.callServerAPI(location: lastLocation, place: first)
                 }
             } else {
-                print("date is greater than now")
+                print("date is greater than now, activityType", getActivityType())
             }
         }
         

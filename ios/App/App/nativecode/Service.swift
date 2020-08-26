@@ -140,20 +140,47 @@ extension AppDelegate {
             //"direction": direction == nil ? 0 : direction.magneticHeading,
             "direction": Double(String.init(format: "%.7f", location.course.magnitude))!,
             "speed": Double(String.init(format: "%.7f", location.speed.magnitude))!,
-            "satellite": 0,
-            "csq": 0, //hardcoded
-            
             "address": address,
-            "locationMode": "A", //A-GPS, W-wifi
+            
             "eventType": eventType,
             "cacheTimeStamp": location.timestamp.toUTCString("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"),
-            "activityType": "activityType",
+            "batteryLevel": Double(round(1000*UIDevice.current.batteryLevel*100)/1000),
+            "isBatteryCharging": UIDevice.current.batteryState == .charging ? true : false,
+            
+            "activityType": getActivityType(),
             "activityConfidence": -1,
             "isMoving": false, //calculated based on activityType
             "fix": 0, //hardcoded
-            "batteryLevel": Double(round(1000*UIDevice.current.batteryLevel*100)/1000),
-            "isBatteryCharging": UIDevice.current.batteryState == .charging ? true : false,
+            "csq": 0, //hardcoded
+            "satellite": 0,
+            "locationMode": "A", //A-GPS, W-wifi
+            
             ]]
+    }
+    
+//    func getSatelliteCount (_ loc: CLLocation) -> Int{
+//        var satellite = 4
+//        if loc.verticalAccuracy < 60.0 {return 5}
+//        else if loc.verticalAccuracy < 300.0 {return 3}
+//        else if loc.verticalAccuracy < 500.0 {return 2}
+//        else {return 1}
+//    }
+    
+    func getActivityType () -> String {
+        switch locationManager.activityType {
+        case .airborne:
+            return "airborne"
+        case .automotiveNavigation:
+            return "automotiveNavigation"
+        case .fitness:
+            return "fitness"
+        case .other:
+            return "other"
+        case .otherNavigation:
+            return "otherNavigation"
+        default:
+            return "Unknown"
+        }
     }
 }
 
