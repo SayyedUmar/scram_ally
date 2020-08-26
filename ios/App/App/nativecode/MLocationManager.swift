@@ -77,9 +77,12 @@ extension AppDelegate {
             else {return}
         let event:[String : Any] = ["eventType":"Button Pressed", "event": "Panic Button Pressed",
                                     "eventData":[["name":"Dialed Number", "value":panicBtnNumber]], "victimId":self.person.victimId]
-        let body = getPostData(location: lastLocation, event:event)
-        print("sendPanicAlertToServer", body)
-        callAPI(body: body)
+        lastLocation.geocode { (place, er) in
+            guard let p = place, let first = p.first, er == nil else {print("geocode error", er?.localizedDescription); return}
+            let body = self.getPostData(location: self.lastLocation, event:event, address: first.getFullAddress())
+            print("sendPanicAlertToServer", body)
+            self.callAPI(body: body)
+        }
     }
     
     func callDummyApi (location: CLLocation?) {
@@ -183,9 +186,10 @@ extension AppDelegate {
         let isCharging = UIDevice.current.batteryState == UIDevice.BatteryState.charging
         let isBatteryLow = UserDefaults.standard.bool(forKey: "isBatteryLow")
         if (battery >= 40.0 && isBatteryLow) { //Battery Low Clear
+            UserDefaults.standard.setValue(false, forKey: "isBatteryLow")
             sendBatteryEvents(isCharging, Int(battery), eventType: "Battery Low Clear")
         } else if (battery < 21 && !isBatteryLow) { // Battery Low Clear
-            UserDefaults.standard.setValue(false, forKey: "isBatteryLow")
+            UserDefaults.standard.setValue(true, forKey: "isBatteryLow")
             sendBatteryEvents(isCharging, Int(battery), eventType: "Battery Low")
         }
     }
@@ -197,17 +201,23 @@ extension AppDelegate {
         ["name":"BatteryStatus", "value":"\(battery)"],
         ["name":"ChargingStatus", "value":isCharging ? "0" : "4"]
         ], "victimId":self.person.victimId]
-        let body = getPostData(location: lastLocation, event:event)
-        print("sendBatteryEvents", body)
-        callAPI(body: body)
+        lastLocation.geocode { (place, er) in
+            guard let p = place, let first = p.first, er == nil else {print("geocode error", er?.localizedDescription); return}
+            let body = self.getPostData(location: self.lastLocation, event:event, address: first.getFullAddress())
+            print("sendBatteryEvents", body)
+            self.callAPI(body: body)
+        }
     }
     func sendDeviceEvents (eventType: String, eventName: String) {
         if (person == nil || lastLocation == nil) {return}
         let event:[String : Any] = ["eventType":eventType, "event": eventName,
                                     "eventData":[["":""]], "victimId":self.person.victimId]
-        let body = getPostData(location: lastLocation, event:event)
-        print("sendDeviceEvents", body)
-        callAPI(body: body)
+       lastLocation.geocode { (place, er) in
+            guard let p = place, let first = p.first, er == nil else {print("geocode error", er?.localizedDescription); return}
+            let body = self.getPostData(location: self.lastLocation, event:event, address: first.getFullAddress())
+            print("sendDeviceEvents", body)
+            self.callAPI(body: body)
+        }
     }
 }
 
@@ -232,6 +242,10 @@ extension AppDelegate: CLLocationManagerDelegate {
 //        self.locationManager.stopUpdatingLocation()
 //        let lastLocation = locations.last!
         lastLocation = locations.last
+        if (lastLocation.coordinate.latitude == 0.0 || lastLocation.coordinate.longitude == 0.0 || lastLocation.horizontalAccuracy == 2500.0) {
+            self.locationManager.stopUpdatingLocation()
+            self.locationManager.startUpdatingLocation()
+        }
         if var lastDate = UserDefaults.standard.value(forKey: "lastLocationTime") as? Date {
             let now = Date()
             lastDate.addTimeInterval(1 * 60) // in seconds
@@ -241,13 +255,13 @@ extension AppDelegate: CLLocationManagerDelegate {
                 UserDefaults.standard.set(now, forKey: "lastLocationTime")
                 updateLocation(manager, didUpdateLocations: locations)
                 let lastLocation = locations.last!
-                if (lastLocation.coordinate.latitude == 0.0 || lastLocation.coordinate.longitude == 0.0 || lastLocation.horizontalAccuracy == 2500.0) {
-                    self.locationManager.stopUpdatingLocation()
-                    self.locationManager.startUpdatingLocation()
-                }
                 FileActions1().writeToFile("Location Manager : Service enabled - \(CLLocationManager.locationServicesEnabled()), Allows Bg update - \(self.locationManager.allowsBackgroundLocationUpdates), Bg Loc Indicator - \(self.locationManager.showsBackgroundLocationIndicator), Heading filter - \(self.locationManager.headingFilter), Heading Ori -\(self.locationManager.headingOrientation), Max reg Dist - \(self.locationManager.maximumRegionMonitoringDistance)")
-                callServerAPI(location: lastLocation)
+                
                 checkBatteryAndInternetStatus()
+                lastLocation.geocode { (place, er) in
+                    guard let p = place, let first = p.first, er == nil else {print("geocode error", er?.localizedDescription); return}
+                    self.callServerAPI(location: lastLocation, place: first)
+                }
             } else {
                 print("date is greater than now")
             }

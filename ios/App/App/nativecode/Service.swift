@@ -43,10 +43,10 @@ extension AppDelegate {
             FileActions2().writeToFile("DeviceEventsAPI Call Successful:statusCode:\(httpURLResponse.statusCode)")
         }.resume()
     }
-    func callServerAPI (location: CLLocation) {
+    func callServerAPI (location: CLLocation, place: CLPlacemark) {
         let c = location.coordinate
-        let body = getPostData(location: location).toData
-        print("body- \(getPostData(location: location))")
+        let body = getPostData(location: location, address: place.getFullAddress()).toData
+        print("body- \(getPostData(location: location, address: place.getFullAddress()))")
         
         #if targetEnvironment(simulator)
         print("device is simulator")
@@ -113,8 +113,8 @@ extension AppDelegate {
                //
                //        }
     }
-    func getPostData (location: CLLocation, event: [String:Any]) -> [[String: Any]] {
-        var location = getPostData(location: location, eventType:  event["event"] as! String)
+    func getPostData (location: CLLocation, event: [String:Any], address: String) -> [[String: Any]] {
+        var location = getPostData(location: location, address: address ,eventType:  event["event"] as! String)
         var body:[String: Any] = [:]
         body["victimId"] = event["victimId"] as! String
         body["eventType"] = event["eventType"] as! String
@@ -125,7 +125,7 @@ extension AppDelegate {
         body[ "deviceImei"] = self.person.deviceId
         return [body]
     }
-    func getPostData (location: CLLocation, eventType: String = "Location") -> [[String: Any]] {
+    func getPostData (location: CLLocation, address: String, eventType: String = "Location") -> [[String: Any]] {
         return [[
             "victimId": self.person.victimId,
             "deviceImei": self.person.deviceId,
@@ -137,20 +137,60 @@ extension AppDelegate {
             "altitude": location.altitude,
             "accuracy": location.horizontalAccuracy,
             "altitudeAccuracy": location.verticalAccuracy,
-            "direction": direction == nil ? 0 : direction.magneticHeading,
-            "speed": location.speed,
+            //"direction": direction == nil ? 0 : direction.magneticHeading,
+            "direction": String.init(format: "%.7f", location.course.magnitude),
+            "speed": String.init(format: "%.7f", location.speed.magnitude),
             "satellite": 0,
-            "csq": 0,
-            "isMoving": false, //calculated based on activityType
-            "fix": 0, //zero
-            "address": "address",
-            "locationMode": "A",
+            "csq": 0, //hardcoded
+            
+            "address": address,
+            "locationMode": "A", //A-GPS, W-wifi
             "eventType": eventType,
             "cacheTimeStamp": location.timestamp.toUTCString("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"),
             "activityType": "activityType",
             "activityConfidence": -1,
+            "isMoving": false, //calculated based on activityType
+            "fix": 0, //hardcoded
             "batteryLevel": Double(round(1000*UIDevice.current.batteryLevel*100)/1000),
             "isBatteryCharging": UIDevice.current.batteryState == .charging ? true : false,
             ]]
     }
+}
+
+extension CLLocation {
+    func geocode(completion: @escaping (_ placemark: [CLPlacemark]?, _ error: Error?) -> Void)  {
+        CLGeocoder().reverseGeocodeLocation(self, completionHandler: completion)
+    }
+   
+}
+
+extension CLPlacemark {
+    func getFullAddress() -> String {
+           var add = ""
+           if let p = self.name {
+               add += p + ", "
+           }
+           if let p = self.name {
+               add += p + ", "
+           }
+           if let p = self.subLocality {
+               add += p + ", "
+           }
+           if let p = self.locality {
+               add += p + ", "
+           }
+           if let p = self.subAdministrativeArea {
+               add += p + ", "
+           }
+           if let p = self.administrativeArea {
+               add += p + ", "
+           }
+           if let p = self.country {
+               add += p + ", "
+           }
+           if let p = self.postalCode {
+               add += p + ", "
+           }
+           return add
+       }
 }
