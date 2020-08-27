@@ -755,7 +755,7 @@ export class HomepagePage implements OnInit {
       'registration',
       (token: PushNotificationToken) => {
         console.log('PushNotificationsRegistration', token)
-        this.logService.logInfo('HomePage', 'PushNotificationsRegistration()',
+        this.logService.logInfo('HomePage', 'PushNotificationsRegistration',
           'Push notifications successfully initialized. Token: ' + token.value);
 
         this.commonAPIService.globalPushToken = token;
