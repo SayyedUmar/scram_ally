@@ -546,6 +546,31 @@ export class CommonAPIService {
     await alert.present();
   }
 
+  async presentAlertConfirmCommonWithCallback(title, body,  cancelCallback, okCallback) {
+    const alert = await this.alertController.create({
+      header: title,
+      message: body,
+      buttons: [
+        {
+          text: 'Don\'t Allow',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: cancelCallback
+        }, {
+          text: 'OK',
+          handler: () => {
+            console.log('Open settings');
+            this.openNativeSettings.open('settings').then(res => {
+              console.log(res);
+            });
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
   isToday(momentDate) {
     // return moment(momentDate).isSame(moment().startOf('day'), 'd');
     const today = new Date();

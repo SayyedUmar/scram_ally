@@ -119,20 +119,7 @@ export class AppComponent implements OnInit, OnDestroy {
       this.splashScreen.hide();
       console.log('initializeApp');
       this.initializePushResources();
-      this.platform.resume.subscribe(data => {
-        this.events.publish('autoRefreshAlertList', true);
-        console.log('App resume');
-        // this.commonAPIService.startTimer();
-       
-      }, error => {
-        console.log('Error in app resume..');
-      });
-
-      this.platform.pause.subscribe(() => {
-        this.commonAPIService.pauseTimer();
-        console.log('App paused');
-      });
-
+      
       this.initializeBackButtonCustomHandler();
 
       CustomNativePlugin.addListener('myCustomEvent', (info: any) => {
@@ -229,12 +216,6 @@ export class AppComponent implements OnInit, OnDestroy {
       this.appVersionNumber = 'v' + this.commonAPIService.appVersionNumber;
       console.log('App Version Number : ' + this.commonAPIService.appVersionNumber);
     });
-
-    setTimeout(() => {
-      this.notificationsService.checkIsRemoteNotificationsEnabled();
-      // this.notificationsService.checkIfLocationEnabled();
-      // this.notificationsService.checkIfLocationAuthorized();
-    }, 2000);
 
     Network.addListener('networkStatusChange', (status) => {
       console.log('Network status changed', status);

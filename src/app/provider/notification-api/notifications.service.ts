@@ -47,9 +47,12 @@ export class NotificationsService {
     await this.diagnostic.isRemoteNotificationsEnabled().then(data => {
       console.log('isRemoteNotificationsEnabled : ' + data);
       if (data === false) {
-        this.commonAPIService.startTimer();
-        this.commonAPIService.presentAlertConfirmCommon('Allow Ally to send Push Notification?', 'Notifications May include alerts. These can be configured in settings');
+        // this.commonAPIService.startTimer();
+        this.commonAPIService.presentAlertConfirmCommonWithCallback('Allow Ally to send Push Notification?', 
+        'Notifications May include alerts. These can be configured in settings',
+        () => this.checkIfLocationEnabled(),() => {});
       } else {
+        this.commonAPIService.pauseTimer();
         this.checkIfLocationEnabled()
         // this.commonAPIService.pauseTimer();
       }
@@ -67,7 +70,9 @@ export class NotificationsService {
     await this.diagnostic.isLocationAvailable().then(success => { 
       console.log('checkIfLocationEnabled : ' + success);
       if (success === false) {
-        this.commonAPIService.presentAlertConfirmCommon('Allow Location Service', 'Ally App needs to access location service to track the current user location')
+        this.commonAPIService.presentAlertConfirmCommonWithCallback('Allow Location Service', 
+        'Ally App needs to access location service to track the current user location',
+        () => this.checkIfLocationAuthorized(),() => {});
       } else {
         this.checkIfLocationAuthorized()
         // this.commonAPIService.pauseTimer();
@@ -80,7 +85,7 @@ export class NotificationsService {
       //authorized_when_in_use | denied_always
       console.log('checkIfLocationAuthorized : ' + status);
       if (status === 'denied_always') {
-        this.commonAPIService.presentAlertConfirmCommon('Allow Location Service', 'Ally App needs to access location service access as Allow Always')
+        this.commonAPIService.presentAlertConfirmCommon('Allow Location Service', 'Ally App needs to access location service access as Allow Always');
       } else {
         this.commonAPIService.pauseTimer();
       }

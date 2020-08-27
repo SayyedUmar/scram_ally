@@ -5,7 +5,7 @@ import { Badge } from '@ionic-native/badge/ngx';
 import { CallNumber } from '@ionic-native/call-number/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { NativeGeocoder, NativeGeocoderOptions, NativeGeocoderResult } from '@ionic-native/native-geocoder/ngx';
-import { Events, MenuController, ModalController, AlertController } from '@ionic/angular';
+import { Events, MenuController, ModalController, AlertController, Platform } from '@ionic/angular';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { DialNumberPage } from 'src/app/modal/dial-number/dial-number.page';
@@ -22,8 +22,7 @@ import { stringify } from 'querystring';
 import { JsonPipe } from '@angular/common';
 // import { FCM } from '@ionic-native/fcm/ngx';
 import { Diagnostic } from '@ionic-native/diagnostic/ngx';
-
-
+import { NotificationsService } from '../../provider/notification-api/notifications.service';
 
 const { PushNotifications, Device, LocalNotifications, CustomNativePlugin } = Plugins;
 
@@ -106,6 +105,8 @@ export class HomepagePage implements OnInit {
     private uniqueDeviceID: UniqueDeviceID,
     // private fcm: FCM,
     private diagnostic: Diagnostic,
+    private platform: Platform,
+    public notificationsService: NotificationsService,
     ) {
 
       console.log
@@ -177,6 +178,7 @@ export class HomepagePage implements OnInit {
     });
 
   }
+
   async ngOnInit() {
 
     const info = await Device.getInfo();
@@ -206,6 +208,37 @@ export class HomepagePage implements OnInit {
 
     this.resetSwipeButton.subscribe(a => this.logService.logDebug('HomePage', 'eventSubscribtions', 'resetSwipeButton subscribed'));
     
+    // CustomNativePlugin.addListener('onViewWillAppear', (info: any) => {
+    //   console.log('onViewWillAppear Data:', info);
+    // });
+    // CustomNativePlugin.addListener('onViewDidAppear', (info: any) => {
+    //   console.log('onViewDidAppear Data:', info);
+    // });
+
+    this.platform.resume.subscribe(data => {
+      this.events.publish('autoRefreshAlertList', true);
+      console.log('App resume');
+      this.checkPermissions()
+    }, error => {
+      console.log('Error in app resume..');
+    });
+
+    this.platform.pause.subscribe(() => {
+      this.commonAPIService.pauseTimer();
+      console.log('App paused');
+    });
+
+    this.checkPermissions()
+    this.commonAPIService.startTimer();
+  }
+
+  checkPermissions () {
+    // this.commonAPIService.startTimer();
+    setTimeout(() => {
+      this.notificationsService.checkIsRemoteNotificationsEnabled();
+      // this.notificationsService.checkIfLocationEnabled();
+      // this.notificationsService.checkIfLocationAuthorized();
+    }, 2000);
   }
 
   async getVictimDetailsAndRegisterDevice() {
