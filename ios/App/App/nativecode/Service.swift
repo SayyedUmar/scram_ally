@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import CoreLocation
+import Capacitor
 
 extension AppDelegate {
     func callAPI (body: [[String: Any]]) {
@@ -27,6 +28,7 @@ extension AppDelegate {
                 let d = data, error == nil
                 else {
                     if let res = response as? HTTPURLResponse, let data = data {
+                        self.handleError(data: data, code: res.statusCode)
                         print(data.toString)
                         FileActions1().writeToFile("DeviceEventsAPI Call Failed: statusCode:\(res.statusCode), error:\(data.toString)")
                         FileActions2().writeToFile("DeviceEventsAPI Call Failed: statusCode:\(res.statusCode), error:\(data.toString)")
@@ -70,6 +72,7 @@ extension AppDelegate {
                 let d = data, error == nil
                 else {
                     if let res = response as? HTTPURLResponse, let data = data {
+                        self.handleError(data: data, code: res.statusCode)
                         FileActions1().writeToFile("API Call Failed: statusCode:\(res.statusCode), error:\(data.toString)")
                         FileActions2().writeToFile("API Call Failed: statusCode:\(res.statusCode), error:\(data.toString)")
                         self.sendDataToIonic(info: ["lat":c.latitude, "lng": c.longitude,
@@ -179,7 +182,16 @@ extension AppDelegate {
         case .otherNavigation:
             return "otherNavigation"
         default:
-            return "Unknown"
+            return "unknown"
+        }
+    }
+    
+    func handleError(data: Data, code: Int) {
+        if code == 401 || code == 403 || code == 412 {
+            let str = data.toString.replacingOccurrences(of: "[]", with: " ")
+            DispatchQueue.global().async {
+                SwiftEventBus.post("onHandleError", sender: ["data": str])
+            }
         }
     }
 }

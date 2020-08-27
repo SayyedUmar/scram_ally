@@ -7,7 +7,7 @@
 
 import Foundation
 import MessageUI
-import SwiftEventBus
+//import SwiftEventBus
 import Capacitor
 
 class RefreshAppContentsOperation {

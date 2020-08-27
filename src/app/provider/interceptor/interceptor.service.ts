@@ -96,7 +96,7 @@ export class InterceptorService implements HttpInterceptor {
         if (err.status === 403) {
           this.logService.logError('InterceptorService', 'interceptorMethod()', 'Unauthorised interceptor ...');
           this.authenticationService.logoutVictim();
-          this.router.navigate(['auth']);
+          // this.router.navigate(['auth']);
         }
       });    
     }

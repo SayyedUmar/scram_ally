@@ -123,11 +123,7 @@ export class AppComponent implements OnInit, OnDestroy {
         this.events.publish('autoRefreshAlertList', true);
         console.log('App resume');
         // this.commonAPIService.startTimer();
-        setTimeout(() => {
-          this.notificationsService.checkIsRemoteNotificationsEnabled();
-          // this.notificationsService.checkIfLocationEnabled();
-          // this.notificationsService.checkIfLocationAuthorized();
-        }, 2000);
+       
       }, error => {
         console.log('Error in app resume..');
       });
@@ -135,12 +131,6 @@ export class AppComponent implements OnInit, OnDestroy {
       this.platform.pause.subscribe(() => {
         this.commonAPIService.pauseTimer();
         console.log('App paused');
-      });
-
-      Network.addListener('networkStatusChange', (status) => {
-        console.log('Network status changed', status);
-        if (status['connected'] === false) {alert('No Internet! please check your internet connectivity')}
-        this.commonAPIService.networkStatus = status;
       });
 
       this.initializeBackButtonCustomHandler();
@@ -238,6 +228,18 @@ export class AppComponent implements OnInit, OnDestroy {
       this.commonAPIService.appVersionNumber = res;
       this.appVersionNumber = 'v' + this.commonAPIService.appVersionNumber;
       console.log('App Version Number : ' + this.commonAPIService.appVersionNumber);
+    });
+
+    setTimeout(() => {
+      this.notificationsService.checkIsRemoteNotificationsEnabled();
+      // this.notificationsService.checkIfLocationEnabled();
+      // this.notificationsService.checkIfLocationAuthorized();
+    }, 2000);
+
+    Network.addListener('networkStatusChange', (status) => {
+      console.log('Network status changed', status);
+      if (status['connected'] === false) {alert('No Internet! please check your internet connectivity')}
+      this.commonAPIService.networkStatus = status;
     });
   }
 
