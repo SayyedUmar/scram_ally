@@ -189,13 +189,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print("deviceToken", deviceToken.hexString)
         Messaging.messaging().apnsToken = deviceToken
         //Messaging.messaging().subscribe(toTopic: "ios_tech_ally_poc")
-        InstanceID.instanceID().instanceID { (result, error) in
-            if let error = error {
-                NotificationCenter.default.post(name: Notification.Name(CAPNotifications.DidFailToRegisterForRemoteNotificationsWithError.name()), object: error)
-            } else if let result = result {
-                NotificationCenter.default.post(name: Notification.Name(CAPNotifications.DidRegisterForRemoteNotificationsWithDeviceToken.name()), object: result.token)
-            }
-        }
+//        InstanceID.instanceID().instanceID { (result, error) in
+//            if let error = error {
+//                NotificationCenter.default.post(name: Notification.Name(CAPNotifications.DidFailToRegisterForRemoteNotificationsWithError.name()), object: error)
+//            } else if let result = result {
+//                NotificationCenter.default.post(name: Notification.Name(CAPNotifications.DidRegisterForRemoteNotificationsWithDeviceToken.name()), object: result.token)
+//            }
+//        }
         NotificationCenter.default.post(name: Notification.Name(CAPNotifications.DidRegisterForRemoteNotificationsWithDeviceToken.name()), object: deviceToken)
     }
     
