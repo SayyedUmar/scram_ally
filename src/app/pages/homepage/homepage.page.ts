@@ -24,7 +24,7 @@ import { JsonPipe } from '@angular/common';
 import { Diagnostic } from '@ionic-native/diagnostic/ngx';
 import { NotificationsService } from '../../provider/notification-api/notifications.service';
 
-const { PushNotifications, Device, LocalNotifications, CustomNativePlugin } = Plugins;
+const { PushNotifications, Device, LocalNotifications, CustomNativePlugin, Network } = Plugins;
 
 @Component({
   selector: 'app-homepage',
@@ -228,17 +228,19 @@ export class HomepagePage implements OnInit {
       console.log('App paused');
     });
 
-    this.checkPermissions()
+    setTimeout(()=> this.checkPermissions(), 2000)
     this.commonAPIService.startTimer();
   }
 
-  checkPermissions () {
-    // this.commonAPIService.startTimer();
-    setTimeout(() => {
-      this.notificationsService.checkIsRemoteNotificationsEnabled();
-      // this.notificationsService.checkIfLocationEnabled();
-      // this.notificationsService.checkIfLocationAuthorized();
-    }, 2000);
+  async checkPermissions () {
+    const network = await Network.getStatus();
+    if (network.connected === false ) {
+      this.commonAPIService.presentOkAlert("No Internet", "Please check your internet connection!", () => {
+        this.notificationsService.checkIsRemoteNotificationsEnabled();
+      })
+    } else {
+        this.notificationsService.checkIsRemoteNotificationsEnabled();
+    }
   }
 
   async getVictimDetailsAndRegisterDevice() {

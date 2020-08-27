@@ -85,7 +85,7 @@ export class NotificationsService {
       //authorized_when_in_use | denied_always
       console.log('checkIfLocationAuthorized : ' + status);
       if (status === 'denied_always') {
-        this.commonAPIService.presentAlertConfirmCommon('Allow Location Service', 'Ally App needs to access location service access as Allow Always');
+        this.commonAPIService.presentAlertConfirmCommon('Always Allow Location Access', 'Ally App needs to access location service access as Allow Always');
       } else {
         this.commonAPIService.pauseTimer();
       }

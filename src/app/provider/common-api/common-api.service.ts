@@ -605,6 +605,21 @@ export class CommonAPIService {
     console.log('Log out call');
   }
 
+  async presentOkAlert(header:string, message:string, okCallback) {
+    const alert = await this.alertController.create({
+      // cssClass: 'my-custom-class',
+      header: header,
+      // subHeader: 'Subtitle',
+      message: message,
+      buttons: [ {
+        text: 'Ok',
+        handler: okCallback,
+      }]
+    });
+
+    await alert.present();
+  }
+
   startTimer() {
     this.interval = setInterval(() => {
       if (this.timeLeft > 0) {

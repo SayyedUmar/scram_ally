@@ -53,7 +53,7 @@
               </ion-col>
               <ion-col size="9">
                 <p class="lbl-p">
-                  {{item.location ? item.location : 'Address Not Available'}}
+                  {{item.location?item.location:'Address Not Available'}}
                 </p>
               </ion-col>
             </ion-row>
@@ -63,7 +63,7 @@
                 <p class="lbl-p"><b>Account:</b></p>
               </ion-col>
               <ion-col size="9">
-                <p class="lbl-p">{{item.victimAccountName}}</p>
+                <p class="lbl-p"> {{item.victimAccountName}}</p>
               </ion-col>
             </ion-row>
 
@@ -72,7 +72,7 @@
                 <p class="lbl-p"><b>Zone:</b></p>
               </ion-col>
               <ion-col size="9">
-                <p class="lbl-p">{{item.zoneName}}</p>
+                <p class="lbl-p"> {{item.zoneName}}</p>
               </ion-col>
             </ion-row>
           </app-expandable>
@@ -159,7 +159,7 @@
               </ion-col>
               <ion-col size="9">
                 <p class="lbl-p">
-                  {{item.location ? item.location : 'Address Not Available'}}
+                  {{item.location?item.location:'Address Not Available'}}
                 </p>
               </ion-col>
             </ion-row>
@@ -169,7 +169,7 @@
                 <p class="lbl-p"><b>Account:</b></p>
               </ion-col>
               <ion-col size="9">
-                <p class="lbl-p">{{item.victimAccountName}}</p>
+                <p class="lbl-p"> {{item.victimAccountName}}</p>
               </ion-col>
             </ion-row>
 
@@ -178,7 +178,7 @@
                 <p class="lbl-p"><b>Zone:</b></p>
               </ion-col>
               <ion-col size="9">
-                <p class="lbl-p">{{item.zoneName}}</p>
+                <p class="lbl-p"> {{item.zoneName}}</p>
               </ion-col>
             </ion-row>
           </app-expandable>
