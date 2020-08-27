@@ -182,7 +182,6 @@ export class HomepagePage implements OnInit {
   async ngOnInit() {
 
     const info = await Device.getInfo();
-    this.deviceInfo = info
     const uuid = await this.uniqueDeviceID.get()
     this.deviceInfo = {...info, uuid}
     this.setSwipeButton();
@@ -752,7 +751,6 @@ export class HomepagePage implements OnInit {
 
   async initializePushResources() {
 
-
     PushNotifications.addListener(
       'registration',
       (token: PushNotificationToken) => {
@@ -764,7 +762,7 @@ export class HomepagePage implements OnInit {
         this.pushNotificationToken = token;
         const pushNotificationTokenRequest = {
           pushNotificationToken: this.pushNotificationToken.value,
-          platform: 'android'
+          platform: this.deviceInfo.platform
         };
 
         this.pushDidInitialize = true;
