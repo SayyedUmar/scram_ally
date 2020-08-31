@@ -263,7 +263,7 @@ extension AppDelegate: CLLocationManagerDelegate {
                     self.callServerAPI(location: lastLocation, place: first)
                 }
             } else {
-                print("date is greater than now, activityType", getActivityType())
+//                print("date is greater than now, activityType", getActivityType())
             }
         }
         
@@ -276,7 +276,7 @@ extension AppDelegate: CLLocationManagerDelegate {
         if self.geotification == nil {
             self.geotification = Geotification(identifier: self.region_identifier, cord: lastLocation.coordinate)
             self.stopMonitoring(geotification: Geotification(identifier: self.region_identifier, cord: lastLocation.coordinate))
-            self.monitorRegionAtLocation(center: lastLocation.coordinate, identifier: self.region_identifier)
+//            self.monitorRegionAtLocation(center: lastLocation.coordinate, identifier: self.region_identifier)
             initialLocation = lastLocation
         }
         let distance = lastLocation.distance(from: initialLocation)

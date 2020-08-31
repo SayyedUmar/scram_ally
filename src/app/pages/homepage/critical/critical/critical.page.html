@@ -1,4 +1,4 @@
-<ion-content>
+<ion-content fullscreen>
 
   <ion-list lines="none" *ngIf="criticalAlertList.length > 0">
     <ion-item-divider class="divider-margin-top" *ngIf="isTodayDataAvailable">
@@ -178,7 +178,7 @@
                 <p class="lbl-p"><b>Zone:</b></p>
               </ion-col>
               <ion-col size="9">
-                <p class="lbl-p"> {{item.zoneName}}</p>
+                <p class="lbl-p">{{item.zoneName}}</p>
               </ion-col>
             </ion-row>
           </app-expandable>

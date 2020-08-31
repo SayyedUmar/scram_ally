@@ -209,9 +209,9 @@ extension CLPlacemark {
            if let p = self.name {
                add += p + ", "
            }
-           if let p = self.name {
-               add += p + ", "
-           }
+//           if let p = self.name {
+//               add += p + ", "
+//           }
            if let p = self.subLocality {
                add += p + ", "
            }
