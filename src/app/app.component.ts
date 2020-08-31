@@ -9,7 +9,7 @@ import { BackgroundMode } from '@ionic-native/background-mode/ngx';
 import { ForegroundService } from '@ionic-native/foreground-service/ngx';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { Events, Platform, IonRouterOutlet } from '@ionic/angular';
+import { Events, Platform } from '@ionic/angular';
 import { Store } from '@ngrx/store';
 import { IAppState } from 'src/app/provider/business-model/index';
 import { AuthenticationService } from './provider/auth/authentication.service';
@@ -93,7 +93,6 @@ export class AppComponent implements OnInit, OnDestroy {
     private appMinimize: AppMinimize,
     private backgroundMode: BackgroundMode,
     private androidPermissions: AndroidPermissions,
-    private routerOutlet: IonRouterOutlet
   ) {
     this.initializeApp();
 
@@ -198,12 +197,8 @@ export class AppComponent implements OnInit, OnDestroy {
     CustomNativePlugin.customStopService();
   }
 
-  ionViewWillLeave () {
-    this.routerOutlet.swipeGesture = true;
-  }
-
   async ngOnInit() {
-    this.routerOutlet.swipeGesture = false;
+
     // Get the current network status
     this.commonAPIService.networkStatus = await Network.getStatus();
 

@@ -5,7 +5,7 @@ import { Badge } from '@ionic-native/badge/ngx';
 import { CallNumber } from '@ionic-native/call-number/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { NativeGeocoder, NativeGeocoderOptions, NativeGeocoderResult } from '@ionic-native/native-geocoder/ngx';
-import { Events, MenuController, ModalController, AlertController, Platform } from '@ionic/angular';
+import { Events, MenuController, ModalController, AlertController, Platform, IonRouterOutlet } from '@ionic/angular';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { DialNumberPage } from 'src/app/modal/dial-number/dial-number.page';
@@ -107,6 +107,7 @@ export class HomepagePage implements OnInit {
     private diagnostic: Diagnostic,
     private platform: Platform,
     public notificationsService: NotificationsService,
+    private routerOutlet: IonRouterOutlet
     ) {
 
       console.log
@@ -180,7 +181,7 @@ export class HomepagePage implements OnInit {
   }
 
   async ngOnInit() {
-
+    this.routerOutlet.swipeGesture = false;
     const info = await Device.getInfo();
     const uuid = await this.uniqueDeviceID.get()
     this.deviceInfo = {...info, uuid}
