@@ -144,7 +144,7 @@
 		1C92452BEFE979480D78F6622837D660 /* pb.h in Headers */ = {isa = PBXBuildFile; fileRef = B50515A0512FD7CCFBA796F33CBEA54D /* pb.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1CDC6ACBF2810D010D2CE8FC9D017AD1 /* CAPAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9683256C7E986C268F91CA53C7035B /* CAPAppDelegate.swift */; };
 		1D219609D7E0676A60C22E424A598749 /* FIRInstanceIDCheckinPreferences+Internal.m in Sources */ = {isa = PBXBuildFile; fileRef = F36B356C08DE91638560D488C0280BF7 /* FIRInstanceIDCheckinPreferences+Internal.m */; };
-		1D7721DF24F693F2009C0170 /* SwiftEventBus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7721DE24F693F2009C0170 /* SwiftEventBus.swift */; };
+		1D2794F924F8E60700CBA437 /* SwiftEventBus.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7340452FB69D0614E10A48A9132BECC /* SwiftEventBus.swift */; };
 		1D87947ED372D3D9E6EDB65909041C81 /* GULHeartbeatDateStorage.h in Headers */ = {isa = PBXBuildFile; fileRef = AD3990D8DB90EDB25A74D11A9F62BDA6 /* GULHeartbeatDateStorage.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		1E3C3EE31EFCE967BCC6ED003AF1D0AF /* GoogleAutoCompleteRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD34740971272AB6C10D8933A2DF741 /* GoogleAutoCompleteRequest.swift */; };
 		1E7EFF16FA7B776EE665D6691DD1CA4A /* FIRInstallationsIIDTokenStore.m in Sources */ = {isa = PBXBuildFile; fileRef = EDBA186C0A707B4019C3E6E392CA6D74 /* FIRInstallationsIIDTokenStore.m */; };
@@ -1322,7 +1322,6 @@
 		1BF6452FF29F791E176E80C551849596 /* FIRInstallationsItem.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FIRInstallationsItem.h; path = FirebaseInstallations/Source/Library/FIRInstallationsItem.h; sourceTree = "<group>"; };
 		1C2165AD914B31A20C6AE1399C55C8C7 /* FIRInstanceIDUtilities.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FIRInstanceIDUtilities.m; path = Firebase/InstanceID/FIRInstanceIDUtilities.m; sourceTree = "<group>"; };
 		1C4FEDF7D3E0DA0B1AFE1274056DC9C7 /* NSError+FIRInstanceID.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSError+FIRInstanceID.h"; path = "Firebase/InstanceID/NSError+FIRInstanceID.h"; sourceTree = "<group>"; };
-		1D7721DE24F693F2009C0170 /* SwiftEventBus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftEventBus.swift; sourceTree = "<group>"; };
 		1D900BDF08F8E2DA73D51A528F624B32 /* GPBAny.pbobjc.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPBAny.pbobjc.h; path = objectivec/GPBAny.pbobjc.h; sourceTree = "<group>"; };
 		1D9F11C01B21D02B43FBC01405910816 /* Diagnostic_Notifications.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = Diagnostic_Notifications.h; sourceTree = "<group>"; };
 		1E7B1AD8DC68C904C5F300E2BEB644FF /* FBLPromise+Async.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "FBLPromise+Async.m"; path = "Sources/FBLPromises/FBLPromise+Async.m"; sourceTree = "<group>"; };
@@ -2930,7 +2929,6 @@
 		53D1AB905201FA1977B8F5ACA1FABCAB /* Capacitor */ = {
 			isa = PBXGroup;
 			children = (
-				1D7721DE24F693F2009C0170 /* SwiftEventBus.swift */,
 				5233E65336D0A04EBA1AF478984646BF /* Capacitor.h */,
 				2E9683256C7E986C268F91CA53C7035B /* CAPAppDelegate.swift */,
 				08A69C85DF038C5DEC1F7F1233D69D03 /* CAPAssetHandler.swift */,
@@ -5203,7 +5201,7 @@
 				BC28E9C4FF1E446DEB5088DBD01547F1 /* Storage.swift in Sources */,
 				01182B516198A9E20029DDFABDD9C08A /* TmpViewController.swift in Sources */,
 				300C8E5F51A5B8549F0A93ABDC120303 /* Toast.swift in Sources */,
-				1D7721DF24F693F2009C0170 /* SwiftEventBus.swift in Sources */,
+				1D2794F924F8E60700CBA437 /* SwiftEventBus.swift in Sources */,
 				491A376DD8591CE6AFB5F977774A8674 /* UIColor.swift in Sources */,
 				E3701B7B86894F5BA08B978342FF94DE /* UILabel.swift in Sources */,
 				DA2F78B276AC91B900F413C35482CCC2 /* UIStatusBarManager+CAPHandleTapAction.m in Sources */,

@@ -511,6 +511,7 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
 
         // Change this to your preferred presentation option
         completionHandler([.alert,.badge,.sound])
+//        SwiftEventBus.post("onRemoteNotification", sender: "")
     }
     
     //TAP on notification hanlder

@@ -54,9 +54,9 @@ extension AppDelegate {
         
     }
     
-    func sendDataToIonic (info:[String: Any]) {
+    func sendDataToIonic (type:String, info:[String: Any]) {
         NotificationCenter.default.post(
-                        name: NSNotification.Name.init("onLocationCapture"),
+                        name: NSNotification.Name.init(type),
                         object: self,
                         userInfo: info)
     }

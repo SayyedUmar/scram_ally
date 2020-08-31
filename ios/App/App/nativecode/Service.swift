@@ -18,7 +18,7 @@ extension AppDelegate {
         
         FileActions2().writeToFile("DeviceEvents location_status=\(getLocationSerStatus()), internet=\(Reachability.isConnectedToNetwork()) request=\(d!.toString)")
         
-        let url = URL(string: "https://allymobileapigateway.scramstage.com/api/v1/NativeMobile/DeviceEvents")!
+        let url = URL(string: Const.BASE_URL+"/api/v1/NativeMobile/DeviceEvents")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.httpBody = d
@@ -32,7 +32,7 @@ extension AppDelegate {
                         print(data.toString)
                         FileActions1().writeToFile("DeviceEventsAPI Call Failed: statusCode:\(res.statusCode), error:\(data.toString)")
                         FileActions2().writeToFile("DeviceEventsAPI Call Failed: statusCode:\(res.statusCode), error:\(data.toString)")
-                        self.sendDataToIonic(info: ["lat":c.latitude, "lng": c.longitude,
+                        self.sendDataToIonic(type: "onLocationCapture", info: ["lat":c.latitude, "lng": c.longitude,
                                                     "statusCode": res.statusCode,
                                                     "response": data.toString,
                                                     "request": data.toString
@@ -60,7 +60,7 @@ extension AppDelegate {
         
         FileActions2().writeToFile("location_status=\(getLocationSerStatus()), internet=\(Reachability.isConnectedToNetwork()) request=\(body!.toString)")
         
-        let url = URL(string: "https://allymobileapigateway.scramstage.com/api/v1/NativeMobile/Location")!
+        let url = URL(string: Const.BASE_URL+"/api/v1/NativeMobile/Location")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.httpBody = body
@@ -75,7 +75,7 @@ extension AppDelegate {
                         self.handleError(data: data, code: res.statusCode)
                         FileActions1().writeToFile("API Call Failed: statusCode:\(res.statusCode), error:\(data.toString)")
                         FileActions2().writeToFile("API Call Failed: statusCode:\(res.statusCode), error:\(data.toString)")
-                        self.sendDataToIonic(info: ["lat":c.latitude, "lng": c.longitude,
+                        self.sendDataToIonic(type: "onLocationCapture", info: ["lat":c.latitude, "lng": c.longitude,
                                                     "statusCode": res.statusCode,
                                                     "response": data.toString,
                                                     "request": body!.toString
@@ -86,7 +86,7 @@ extension AppDelegate {
             }
             FileActions1().writeToFile("API Call Successful:statusCode:\(httpURLResponse.statusCode)")
             FileActions2().writeToFile("API Call Successful:statusCode:\(httpURLResponse.statusCode)")
-            self.sendDataToIonic(info: ["lat":c.latitude, "lng": c.longitude, "statusCode": httpURLResponse.statusCode])
+            self.sendDataToIonic(type: "onLocationCapture", info: ["lat":c.latitude, "lng": c.longitude, "statusCode": httpURLResponse.statusCode])
         }.resume()
         //        Alamofire.request("http://localhost:8004/testAPI",method: .get, parameters: [:], headers: [:])
                //            //         .validate(contentType: [contentType])

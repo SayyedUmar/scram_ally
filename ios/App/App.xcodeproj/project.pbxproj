@@ -13,6 +13,7 @@
 		1DE3242724EDC3C9009F477A /* operation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE3242124EDC3C9009F477A /* operation.swift */; };
 		1DE3242824EDC3C9009F477A /* MLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE3242224EDC3C9009F477A /* MLocationManager.swift */; };
 		1DE3242924EDC3C9009F477A /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE3242324EDC3C9009F477A /* Reachability.swift */; };
+		1DEA5F0B24FD11CD00A393F1 /* Const.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DEA5F0A24FD11CD00A393F1 /* Const.swift */; };
 		1DF5A5B524EFFA8300BD862F /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF5A5B424EFFA8300BD862F /* Service.swift */; };
 		2FAD9763203C412B000D30F8 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = 2FAD9762203C412B000D30F8 /* config.xml */; };
 		50379B232058CBB4000EE86E /* capacitor.config.json in Resources */ = {isa = PBXBuildFile; fileRef = 50379B222058CBB4000EE86E /* capacitor.config.json */; };
@@ -32,6 +33,7 @@
 		1DE3242224EDC3C9009F477A /* MLocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MLocationManager.swift; sourceTree = "<group>"; };
 		1DE3242324EDC3C9009F477A /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		1DE3242424EDC3C9009F477A /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		1DEA5F0A24FD11CD00A393F1 /* Const.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Const.swift; sourceTree = "<group>"; };
 		1DF5A5B424EFFA8300BD862F /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		2FAD9762203C412B000D30F8 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = config.xml; sourceTree = "<group>"; };
 		50379B222058CBB4000EE86E /* capacitor.config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = capacitor.config.json; sourceTree = "<group>"; };
@@ -69,6 +71,7 @@
 				1DE3242324EDC3C9009F477A /* Reachability.swift */,
 				1DE3242424EDC3C9009F477A /* ViewController.swift */,
 				1DF5A5B424EFFA8300BD862F /* Service.swift */,
+				1DEA5F0A24FD11CD00A393F1 /* Const.swift */,
 			);
 			path = nativecode;
 			sourceTree = "<group>";
@@ -261,6 +264,7 @@
 				1D9BB55B24EDC46500D19160 /* AppDelegate.swift in Sources */,
 				1DE3242724EDC3C9009F477A /* operation.swift in Sources */,
 				1DF5A5B524EFFA8300BD862F /* Service.swift in Sources */,
+				1DEA5F0B24FD11CD00A393F1 /* Const.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -406,7 +410,7 @@
 				INFOPLIST_FILE = App/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.0.13;
+				MARKETING_VERSION = 1.0.14;
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" \"-DDEBUG\"";
 				PRODUCT_BUNDLE_IDENTIFIER = com.scram.mobile.ally.stage;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -430,7 +434,7 @@
 				INFOPLIST_FILE = App/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.0.13;
+				MARKETING_VERSION = 1.0.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.scram.mobile.ally.stage;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = ALLY_STAGE_PP;
